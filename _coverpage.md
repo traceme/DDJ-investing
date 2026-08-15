@@ -7,4 +7,5 @@
 - 知止知足 · 柔弱不争 · 物极必反 · 为道日损
 
 [开始阅读](README.md)
+[下载 EPUB](https://traceme.github.io/DDJ-investing/道德经81章投资心法.epub)
 [GitHub](https://github.com/traceme/DDJ-investing)
