@@ -19,7 +19,7 @@ Every chapter file follows one fixed format — preserve it when editing:
 
 - H1: `# 第X章 · 核心句` (Chinese-numeral chapter number + the chapter's most resonant line)
 - `## 原文`: the full chapter as a blockquote, copied verbatim from `原文/道德经-王弼本.md` — simplified characters (base file is itself a t2s conversion; see its header for the conversion notes), including editorial brackets 〔〕 and small-form punctuation ﹖﹕﹗､, never paraphrased. Any 原文 change must first be made in the base file, with a header 校记 note.
-- `## 投资心法`: a 600–1500-character simplified-Chinese essay in the established style: personal/life entry point → at least one concrete market scene (with sensory detail) → 先破后立 → circle back to the original lines → closing antithetical distillation (对仗式心法, e.g. "为学日益为向外求…／为道日损为向内修…"). Chapters on statecraft/war extend naturally into risk, cycles, or governance — never forced. No per-file disclaimer (README carries the single disclaimer).
+- `## 投资心法`: a 600–1500-character simplified-Chinese essay in the established style: personal/life entry point → at least one concrete market scene (with sensory detail) → 先破后立 → circle back to the original lines → closing antithetical distillation (对仗式心法, e.g. "为学日益为向外求…／为道日损为向内修…"). Chapters on statecraft/war extend naturally into risk, cycles, or governance — never forced. Verbatim 道德经 quotes inside the essay are wrapped in `<mark>…</mark>` (styled bold + gold via `index.html` CSS); preserve these tags when editing and wrap any newly added quote the same way. No per-file disclaimer (README carries the single disclaimer).
 
 Cross-cutting standards (apply to chapters and the compass essay alike):
 
