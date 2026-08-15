@@ -64,6 +64,17 @@
 <body>
   <div id="app">正在加载…</div>
   <script>
+    // 兜底：旧地址 #/第NNN章（三位数字，含URL编码形式）重定向到 #/thethirdeye/第NNN章
+    (function () {
+      function fix() {
+        var m = location.hash.match(/^#\/(?:第|%E7%AC%AC)(\d{3})(?:章|%E7%AB%A0)(.*)$/)
+        if (m) location.replace(location.pathname + location.search + '#/thethirdeye/第' + m[1] + '章' + m[2])
+      }
+      fix()
+      window.addEventListener('hashchange', fix)
+    })()
+  </script>
+  <script>
     window.$docsify = {
       name: '道德经81章投资心法',
       repo: 'https://github.com/traceme/DDJ-investing',
