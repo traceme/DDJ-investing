@@ -1,1 +1,5 @@
 .DS_Store
+
+# 源书不入库（付费内容合集，仅提交转化后的读书笔记）
+thethirdeye.refined.md
+chunks/

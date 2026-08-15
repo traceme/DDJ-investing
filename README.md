@@ -6,6 +6,8 @@
 
 📖 电子书：[下载 EPUB](https://traceme.github.io/DDJ-investing/道德经81章投资心法.epub)（含封面、分卷目录与底本附录，可导入微信读书、Apple Books、Kindle 等阅读器）
 
+📚 姊妹辑：[第三只眼观 · 投资心法](thethirdeye/README.md)——《第三只眼观》151篇文章的逐篇读书笔记（中心思想＋投资随笔），体例与本书一致。
+
 ## 目录
 
 | 章 | 核心句 | 一句话主旨 | 链接 |
