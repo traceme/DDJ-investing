@@ -3,3 +3,6 @@
 # 源书不入库（付费内容合集，仅提交转化后的读书笔记）
 thethirdeye.refined.md
 chunks/
+
+# 有声书声线试听样品不入库（正式音轨在 audiobook/ 根目录）
+audiobook/samples/
