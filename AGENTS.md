@@ -29,11 +29,11 @@ These catch whitespace errors and confirm the intended change set.
 
 ## Coding Style & Naming Conventions
 
-Use UTF-8 Markdown and simplified Chinese. Filenames are zero-padded; companion files use three digits, such as `thethirdeye/第017章.md`. Original chapters retain `# 第X章 · 核心句`, `## 原文`, then `## 投资心法`, including their `<mark>` and two `<u>` highlights. Codex chapters use `## 深层原理`, `## 投资推演`, and `## 实操建议`; advice must remain under 100 characters. In both editions, copy 原文 exactly from the authoritative source, including punctuation and editorial brackets. Use root-relative Docsify links.
+Use UTF-8 Markdown and simplified Chinese. Filenames are zero-padded; companion files use three digits, such as `thethirdeye/第017章.md`. Chapters retain `# 第X章 · 核心句`, `## 原文`, `## 投资心法`, and `## 实操建议`, including their `<mark>` and `<u>` highlights. Essays should move from an everyday entry point to a concrete market scene, explain the quoted lines in plain language, and close with a memorable distillation. Advice must remain under 100 characters. Copy 原文 exactly from the authoritative source, including punctuation and editorial brackets. Use root-relative Docsify links.
 
 ## Testing Guidelines
 
-Testing is editorial and manual. Compare every scripture change character-for-character with `原文/道德经-王弼本.md`; update that source and its editorial note first if a correction is required. Preview affected pages at desktop and narrow widths. Confirm sidebar entries, README indexes, media links, and previous/next navigation. Do not present illustrative sectors or market events as stock recommendations, and verify quote attributions against primary sources.
+Testing is editorial and manual. Compare every scripture change character-for-character with `原文/道德经-王弼本.md`; update that source and its editorial note first if a correction is required. The EPUB build also rejects a Codex essay whose normalized similarity to any main-book essay reaches 30%, or that reuses a complete paragraph of at least 50 characters. Preview affected pages at desktop and narrow widths. Confirm sidebar entries, README indexes, media links, and previous/next navigation. Do not present illustrative sectors or market events as stock recommendations, and verify quote attributions against primary sources.
 
 ## Commit & Pull Request Guidelines
 

@@ -10,6 +10,7 @@ import tempfile
 import zipfile
 from dataclasses import dataclass
 from datetime import datetime, timezone
+from difflib import SequenceMatcher
 from io import BytesIO
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
@@ -20,11 +21,16 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 CODEX_DIR = ROOT / "codex"
+MAIN_DIR = ROOT / "chapters"
 SOURCE_TEXT = ROOT / "原文" / "道德经-王弼本.md"
 OUTPUT = ROOT / "道德经81章投资心法Codex版本.epub"
 BOOK_TITLE = "道德经81章投资心法Codex版本"
 BOOK_ID = "ddj-investing-81-codex"
 LANGUAGE = "zh-CN"
+MIN_ESSAY_CHARS = 380
+MAX_ESSAY_CHARS = 800
+SIMILARITY_LIMIT = 0.30
+MIN_SHARED_PARAGRAPH_CHARS = 50
 
 XHTML_HEADER = """<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
@@ -43,8 +49,7 @@ class Chapter:
     number: int
     title: str
     original: str
-    principle: str
-    deduction: str
+    essay: str
     advice: str
 
     @property
@@ -62,7 +67,16 @@ def xhtml_document(title: str, body: str, body_class: str = "") -> str:
 
 
 def inline_markdown(text: str) -> str:
-    escaped = html.escape(text.strip(), quote=True)
+    allowed_tags = {
+        "<mark>": "\ue000",
+        "</mark>": "\ue001",
+        "<u>": "\ue002",
+        "</u>": "\ue003",
+    }
+    protected = text.strip()
+    for tag, placeholder in allowed_tags.items():
+        protected = protected.replace(tag, placeholder)
+    escaped = html.escape(protected, quote=True)
 
     def replace_link(match: re.Match[str]) -> str:
         label, href = match.groups()
@@ -73,6 +87,8 @@ def inline_markdown(text: str) -> str:
     escaped = re.sub(r"\[([^]]+)]\(([^)]+)\)", replace_link, escaped)
     escaped = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", escaped)
     escaped = re.sub(r"`([^`]+)`", r"<code>\1</code>", escaped)
+    for tag, placeholder in allowed_tags.items():
+        escaped = escaped.replace(placeholder, tag)
     return escaped
 
 
@@ -81,8 +97,8 @@ def paragraphs(text: str, css_class: str | None = None) -> str:
     blocks = [block.strip() for block in re.split(r"\n\s*\n", text) if block.strip()]
     rendered = []
     for block in blocks:
-        joined = " ".join(line.strip() for line in block.splitlines())
-        rendered.append(f"<p{class_attr}>{inline_markdown(joined)}</p>")
+        rendered_lines = [inline_markdown(line) for line in block.splitlines()]
+        rendered.append(f"<p{class_attr}>{'<br />'.join(rendered_lines)}</p>")
     return "\n".join(rendered)
 
 
@@ -171,6 +187,69 @@ def parse_source_text() -> tuple[str, dict[int, str]]:
     return introduction, chapters
 
 
+def extract_investment_essay(path: Path) -> str:
+    text = path.read_text(encoding="utf-8")
+    heading = re.search(r"^## 投资心法\s*$", text, re.MULTILINE)
+    if not heading:
+        raise ValueError(f"缺少投资心法：{path}")
+    remainder = text[heading.end() :]
+    next_heading = re.search(r"^##\s+", remainder, re.MULTILINE)
+    return remainder[: next_heading.start() if next_heading else None].strip()
+
+
+def normalized_prose(text: str) -> str:
+    without_tags = re.sub(r"</?(?:mark|u)>", "", text)
+    return re.sub(r"[\W_]+", "", without_tags)
+
+
+def audit_independent_prose(chapters: list[Chapter]) -> tuple[int, int, float]:
+    """Reject copied prose, including copying from a different main-book chapter."""
+    main_essays = {
+        number: extract_investment_essay(MAIN_DIR / f"第{number:02d}章.md")
+        for number in range(1, 82)
+    }
+    normalized_main = {
+        number: normalized_prose(essay) for number, essay in main_essays.items()
+    }
+    main_paragraphs: dict[str, int] = {}
+    for number, essay in main_essays.items():
+        for paragraph in re.split(r"\n\s*\n", essay):
+            normalized = normalized_prose(paragraph)
+            if len(normalized) >= MIN_SHARED_PARAGRAPH_CHARS:
+                main_paragraphs.setdefault(normalized, number)
+
+    highest_similarity = (0, 0, 0.0)
+    for chapter in chapters:
+        normalized = normalized_prose(chapter.essay)
+        best_ratio, best_number = max(
+            (
+                SequenceMatcher(
+                    None,
+                    normalized,
+                    main_text,
+                    autojunk=False,
+                ).ratio(),
+                main_number,
+            )
+            for main_number, main_text in normalized_main.items()
+        )
+        if best_ratio >= SIMILARITY_LIMIT:
+            raise ValueError(
+                f"第{chapter.number}章与主书第{best_number}章文本相似度"
+                f"为{best_ratio:.1%}，必须低于{SIMILARITY_LIMIT:.0%}"
+            )
+        if best_ratio > highest_similarity[2]:
+            highest_similarity = (chapter.number, best_number, best_ratio)
+        for paragraph in re.split(r"\n\s*\n", chapter.essay):
+            normalized_paragraph = normalized_prose(paragraph)
+            copied_from = main_paragraphs.get(normalized_paragraph)
+            if copied_from is not None:
+                raise ValueError(
+                    f"第{chapter.number}章复用了主书第{copied_from}章的完整长段落"
+                )
+    return highest_similarity
+
+
 def parse_chapter(number: int) -> Chapter:
     path = CODEX_DIR / f"第{number:02d}章.md"
     text = path.read_text(encoding="utf-8")
@@ -180,7 +259,7 @@ def parse_chapter(number: int) -> Chapter:
         raise ValueError(f"缺少章节标题：{path}")
 
     section_matches = list(
-        re.finditer(r"^## (原文|深层原理|投资推演|实操建议)\s*$", text, re.MULTILINE)
+        re.finditer(r"^## (原文|投资心法|实操建议)\s*$", text, re.MULTILINE)
     )
     sections: dict[str, str] = {}
     for pos, match in enumerate(section_matches):
@@ -190,7 +269,7 @@ def parse_chapter(number: int) -> Chapter:
             else len(text)
         )
         sections[match.group(1)] = text[match.end() : end].strip()
-    expected = {"原文", "深层原理", "投资推演", "实操建议"}
+    expected = {"原文", "投资心法", "实操建议"}
     if set(sections) != expected:
         raise ValueError(f"章节结构不完整：{path}")
 
@@ -198,26 +277,46 @@ def parse_chapter(number: int) -> Chapter:
         line[2:] if line.startswith("> ") else line.lstrip(">")
         for line in sections["原文"].splitlines()
     ).strip()
+    essay = sections["投资心法"].strip()
+    plain_essay = re.sub(r"\s+", "", re.sub(r"</?(?:mark|u)>", "", essay))
+    if not MIN_ESSAY_CHARS <= len(plain_essay) <= MAX_ESSAY_CHARS:
+        raise ValueError(
+            f"第{number}章投资心法为{len(plain_essay)}字，应保持在"
+            f"{MIN_ESSAY_CHARS}至{MAX_ESSAY_CHARS}字"
+        )
+    if essay.count("<u>") != 2 or essay.count("</u>") != 2:
+        raise ValueError(f"第{number}章投资心法必须恰有两处下划线心法")
+    if essay.count("<mark>") < 2 or essay.count("<mark>") != essay.count("</mark>"):
+        raise ValueError(f"第{number}章原文回扣标记不完整")
     advice = sections["实操建议"].strip()
-    if len(advice) >= 100:
-        raise ValueError(f"第{number}章实操建议达到{len(advice)}字，应少于100字")
+    plain_advice = re.sub(r"\s+", "", advice)
+    if len(plain_advice) >= 100:
+        raise ValueError(f"第{number}章实操建议达到{len(plain_advice)}字，应少于100字")
+    if re.search(r"</?(?:mark|u)>", advice):
+        raise ValueError(f"第{number}章实操建议不得包含mark或u标记")
     return Chapter(
         number=number,
         title=title_match.group(1).strip(),
         original=original,
-        principle=sections["深层原理"],
-        deduction=sections["投资推演"],
+        essay=essay,
         advice=advice,
     )
 
 
-def load_book() -> tuple[list[Chapter], str, dict[int, str]]:
+def load_book() -> tuple[list[Chapter], str, dict[int, str], tuple[int, int, float]]:
     source_intro, source_chapters = parse_source_text()
     chapters = [parse_chapter(number) for number in range(1, 82)]
     for chapter in chapters:
         if chapter.original != source_chapters[chapter.number]:
             raise ValueError(f"第{chapter.number}章原文与王弼底本不一致")
-    return chapters, source_intro, source_chapters
+        source_without_space = re.sub(r"\s+", "", source_chapters[chapter.number])
+        for quote in re.findall(r"<mark>(.*?)</mark>", chapter.essay, re.DOTALL):
+            if re.sub(r"\s+", "", quote) not in source_without_space:
+                raise ValueError(
+                    f"第{chapter.number}章mark引文无法在本章王弼底本中逐字定位：{quote}"
+                )
+    independence_audit = audit_independent_prose(chapters)
+    return chapters, source_intro, source_chapters, independence_audit
 
 
 def get_font(size: int) -> ImageFont.FreeTypeFont:
@@ -299,9 +398,9 @@ def build_cover(path: Path) -> None:
     )
     centered_text(draw, 1525, badge_text, badge_font, background, spacing=4)
 
-    centered_text(draw, 1750, "从章义到投资决策系统", get_font(66), green, spacing=3)
+    centered_text(draw, 1750, "从章句到投资日常", get_font(66), green, spacing=3)
     centered_text(
-        draw, 1870, "深层原理 · 投资推演 · 实操建议", get_font(46), ink, spacing=2
+        draw, 1870, "生活入道 · 市场见心 · 知行合一", get_font(46), ink, spacing=2
     )
     centered_text(draw, 2180, "traceme  ·  Codex", get_font(40), gold, spacing=2)
     image.save(path, format="PNG", optimize=True)
@@ -318,7 +417,7 @@ def title_xhtml() -> str:
     body = """<section epub:type="titlepage" class="title-page">
   <p class="eyebrow">道德经 · 八十一章</p>
   <h1>道德经81章投资心法<br /><span>Codex版本</span></h1>
-  <p class="subtitle">从章义到投资决策系统</p>
+  <p class="subtitle">从章句到投资日常</p>
   <p class="author">traceme · Codex</p>
 </section>"""
     return xhtml_document(BOOK_TITLE, body, "title-body")
@@ -361,12 +460,8 @@ def chapter_xhtml(chapter: Chapter) -> str:
     <blockquote><p>{inline_markdown(chapter.original)}</p></blockquote>
   </section>
   <section>
-    <h2>深层原理</h2>
-    {paragraphs(chapter.principle)}
-  </section>
-  <section>
-    <h2>投资推演</h2>
-    {paragraphs(chapter.deduction)}
+    <h2>投资心法</h2>
+    {paragraphs(chapter.essay)}
   </section>
   <section class="advice">
     <h2>实操建议</h2>
@@ -497,7 +592,7 @@ def content_opf(chapters: list[Chapter], modified: str) -> str:
     <dc:contributor>Codex</dc:contributor>
     <dc:publisher>DDJ-investing</dc:publisher>
     <dc:date>2026-08-19</dc:date>
-    <dc:description>以王弼通行本为底本，从章义推演企业质量、内在价值、资本配置、组合风险与投资者行为，并为每章提供简明实操建议。</dc:description>
+    <dc:description>以王弼通行本为底本，从生活经验和市场场景切入，用通俗语言讲清八十一章与投资方法、人性修炼及长期复利的关系，并为每章提供实操建议。</dc:description>
     <dc:subject>道德经</dc:subject>
     <dc:subject>投资</dc:subject>
     <dc:subject>价值投资</dc:subject>
@@ -575,6 +670,17 @@ blockquote p { margin: 0.3em 0; text-indent: 0; }
 ul { padding-left: 1.5em; }
 li { margin: 0.45em 0; }
 code { font-family: monospace; font-size: 0.9em; }
+mark {
+  padding: 0 0.12em;
+  background: #f3e7bf;
+  color: #7a5819;
+  font-weight: 600;
+}
+u {
+  text-decoration-color: #4d806a;
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.18em;
+}
 table { width: 100%; border-collapse: collapse; font-size: 0.88em; }
 th, td { padding: 0.55em 0.45em; border: 1px solid #d8ccb0; vertical-align: top; }
 th { background: #f2ecdd; color: #3d6b56; }
@@ -657,7 +763,7 @@ def assemble_epub(
         part_xhtml(
             "道经 · 上篇",
             "第一至三十七章",
-            "从名与实、有与无出发，建立认知边界、决策纪律与长期生存的基础。",
+            "从名与实、有与无讲起，在欲望、得失与等待中，看见投资者最先要管住的是自己的心。",
         ),
     )
     write_text(
@@ -665,7 +771,7 @@ def assemble_epub(
         part_xhtml(
             "德经 · 下篇",
             "第三十八至八十一章",
-            "从德与势、反与复展开，推演企业质量、资本配置、组合韧性与投资者行为。",
+            "从德与势、反与复讲起，在周期、仓位与取舍中，学会不争一时而守住长久。",
         ),
     )
     for chapter in chapters:
@@ -782,20 +888,38 @@ def validate_epub(output: Path) -> None:
         if chapter_links != {f"ch{number:02d}.xhtml" for number in range(1, 82)}:
             raise ValueError("导航目录未完整覆盖81章")
 
+        for number in range(1, 82):
+            chapter_page = parsed_xml[f"EPUB/ch{number:02d}.xhtml"]
+            headings = [
+                "".join(heading.itertext())
+                for heading in chapter_page.findall(".//xhtml:h2", xhtml_ns)
+            ]
+            if headings != ["原文", "投资心法", "实操建议"]:
+                raise ValueError(f"第{number}章 EPUB 章节结构错误：{headings}")
+            if len(chapter_page.findall(".//xhtml:u", xhtml_ns)) != 2:
+                raise ValueError(f"第{number}章 EPUB 应包含两处下划线心法")
+            if len(chapter_page.findall(".//xhtml:mark", xhtml_ns)) < 2:
+                raise ValueError(f"第{number}章 EPUB 缺少原文回扣标记")
+
         with Image.open(BytesIO(archive.read("EPUB/cover.png"))) as cover:
             if cover.size != (1600, 2400) or cover.format != "PNG":
                 raise ValueError("封面必须为1600×2400 PNG")
 
 
 def main() -> None:
-    chapters, source_intro, source_chapters = load_book()
+    chapters, source_intro, source_chapters, independence_audit = load_book()
     with tempfile.TemporaryDirectory(prefix="ddj-codex-epub-") as temporary:
         build_dir = Path(temporary)
         assemble_epub(build_dir, chapters, source_intro, source_chapters)
         package_epub(build_dir, OUTPUT)
     validate_epub(OUTPUT)
+    codex_number, main_number, similarity = independence_audit
     print(f"已生成：{OUTPUT}")
     print(f"章节：{len(chapters)}；文件大小：{OUTPUT.stat().st_size:,} bytes")
+    print(
+        f"文本差异审计：最高为Codex第{codex_number}章与主书第{main_number}章"
+        f"的{similarity:.1%}"
+    )
 
 
 if __name__ == "__main__":

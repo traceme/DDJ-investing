@@ -8,7 +8,7 @@
 
 🎧 有声书：[在线播放 / 下载 MP3](有声书.md)——全书 82 条音轨约 4 小时 54 分，微软神经语音「云扬」（新闻播音级男声）AI 朗读，含 ID3 标签可导入任意播放器。
 
-🧭 深度重写：[道德经81章投资心法Codex版本](codex/README.md)（[下载 Codex EPUB](https://traceme.github.io/DDJ-investing/道德经81章投资心法Codex版本.epub)）——从章义出发，逐章推演企业质量、内在价值、资本配置、组合风险与行为纪律，并附不超过100字的实操建议。
+🧭 重悟新版：[道德经81章投资心法Codex版本](codex/README.md)（[下载 Codex EPUB](https://traceme.github.io/DDJ-investing/道德经81章投资心法Codex版本.epub)）——从生活与市场场景切入，用大白话讲透章句、人性与投资方法，并附不超过100字的实操建议。
 
 📚 姊妹辑：[第三只眼观 · 投资心法](thethirdeye/README.md)——《第三只眼观》151篇文章的逐篇读书笔记（中心思想＋投资随笔），体例与本书一致。
 

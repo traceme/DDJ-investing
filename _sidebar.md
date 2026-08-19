@@ -2,7 +2,7 @@
 
 - [🎧 有声书 · AI 朗读版](有声书.md)
 
-- [🧭 Codex版本 · 深度解读](codex/README.md)
+- [🧭 Codex版本 · 重悟新版](codex/README.md)
 
 - **道经 · 上篇（第1–37章）**
   - [第一章 · 道可道，非常道](chapters/第01章.md)
