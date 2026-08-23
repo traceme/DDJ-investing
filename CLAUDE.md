@@ -10,6 +10,7 @@ This is a content repository, not an application. It contains a Chinese-language
 - `codex/第01章.md` … `第81章.md` — the rewritten Codex narrative edition: exact source text followed by a plain-language `投资心法` and a practical recommendation under 100 Chinese characters; `codex/README.md` is its methodology and index
 - `道德经81章投资心法Codex版本.epub` — the generated EPUB 3 edition, including its cover, dual-format navigation, 81 chapters, and the Wang Bi source appendix
 - `scripts/build_codex_epub.py` — the reproducible EPUB builder and structural validator
+- `投资心法100条精选版.md` / `投资心法313条全量版.md` — the three-book distillation (this book, the Codex edition, and 第三只眼观): 313 per-chapter 心法 merged into 100 ranked entries, each carrying the verbatim source quotes with attributions. `python3 scripts/build_selection_epub.py` rebuilds and validates `投资心法100条精选版.epub` (9 themed parts, 100 entry pages, 400 quotes; the validator asserts entry numbering, per-part ranges, and quote counts against the Markdown source)
 - `原文/道德经-王弼本.md` — the sole textual standard for all quoted 原文 (王弼通行本, split and numbered from `daodejing.md`; converted from traditional to simplified characters on 2026-08-15 per user request — the traditional original remains in `daodejing.md`; editorial and conversion notes in its header, e.g. 第33章 restoration, 第31章 校勘括号, 閒→间/繟-kept overrides)
 - `README.md` — book index: 81-chapter table (core line, one-line essence, link) plus the unified disclaimer
 - `验收报告.md` — acceptance report from the multi-agent build (seven criteria, per-group verdicts)

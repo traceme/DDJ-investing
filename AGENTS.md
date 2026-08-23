@@ -16,9 +16,10 @@ Then visit `http://localhost:8000` and verify navigation, search, chapter pagina
 
 ```sh
 python3 scripts/build_codex_epub.py
+python3 scripts/build_selection_epub.py
 ```
 
-This rebuilds and validates the Codex EPUB; it requires Python 3 and Pillow. Before committing, run:
+These rebuild and validate the Codex EPUB and the 100-entry selection EPUB; both require Python 3 and Pillow. Before committing, run:
 
 ```sh
 git diff --check
