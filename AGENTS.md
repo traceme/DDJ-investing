@@ -17,9 +17,10 @@ Then visit `http://localhost:8000` and verify navigation, search, chapter pagina
 ```sh
 python3 scripts/build_codex_epub.py
 python3 scripts/build_selection_epub.py
+python3 scripts/build_jinbing_epub.py
 ```
 
-These rebuild and validate the Codex EPUB and the 100-entry selection EPUB; both require Python 3 and Pillow. Before committing, run:
+These rebuild and validate the Codex EPUB, the 100-entry selection EPUB, and the 72-article 渡人渡己 reading-notes EPUB; all require Python 3 and Pillow. The last one additionally verifies its quotes against the source PDF when it is present locally (PyMuPDF); the PDF itself is gitignored and never committed. Before committing, run:
 
 ```sh
 git diff --check

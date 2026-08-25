@@ -13,5 +13,7 @@
 [下载 Codex EPUB](https://traceme.github.io/DDJ-investing/道德经81章投资心法Codex版本.epub)
 [💎 100条精选](投资心法100条精选版.md)
 [下载精选 EPUB](https://traceme.github.io/DDJ-investing/投资心法100条精选版.epub)
+[📗 渡人渡己读书心法](jinbing-drdj/README.md)
+[下载读书心法 EPUB](https://traceme.github.io/DDJ-investing/人生悟道渡人渡己投资篇读书心法.epub)
 [姊妹辑 EPUB · 第三只眼观](https://traceme.github.io/DDJ-investing/第三只眼观投资心法.epub)
 [GitHub](https://github.com/traceme/DDJ-investing)

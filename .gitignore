@@ -6,3 +6,9 @@ chunks/
 
 # 有声书声线试听样品不入库（正式音轨在 audiobook/ 根目录）
 audiobook/samples/
+
+# 源书不入库（金冰《人生悟道 渡人渡己·投资篇》原书 PDF，仅提交转化后的读书笔记）
+jinbing-drdj/*.pdf
+
+# Python 缓存
+__pycache__/
