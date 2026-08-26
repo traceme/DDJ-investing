@@ -18,9 +18,10 @@ Then visit `http://localhost:8000` and verify navigation, search, chapter pagina
 python3 scripts/build_codex_epub.py
 python3 scripts/build_selection_epub.py
 python3 scripts/build_jinbing_epub.py
+python3 scripts/build_system_epub.py        # 两版一起构建；可加 plain / ddj 只建一版
 ```
 
-These rebuild and validate the Codex EPUB, the 100-entry selection EPUB, and the 72-article 渡人渡己 reading-notes EPUB; all require Python 3 and Pillow. The last one additionally verifies its quotes against the source PDF when it is present locally (PyMuPDF); the PDF itself is gitignored and never committed. Before committing, run:
+These rebuild and validate the Codex EPUB, the 100-entry selection EPUB, the 72-article 渡人渡己 reading-notes EPUB, and both editions of 《投资体系与方法论》（无标注版与道德经对照版）; all require Python 3 and Pillow. The last one additionally verifies its quotes against the source PDF when it is present locally (PyMuPDF); the PDF itself is gitignored and never committed. Before committing, run:
 
 ```sh
 git diff --check
