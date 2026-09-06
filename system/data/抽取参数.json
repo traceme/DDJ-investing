@@ -1,0 +1,513 @@
+{
+ "scratch": "/private/tmp/claude-501/-Users-mac-projects-InvestmentAround-DDJ-investing/1aa4e91e-50dd-498c-8e54-58409bd6e6dd/scratchpad/discipline",
+ "batches": [
+  {
+   "key": "dao01",
+   "book": "《道德经81章投资心法》",
+   "tagPrefix": "道",
+   "dir": "chapters",
+   "pad": 2,
+   "suffix": "章",
+   "from": 1,
+   "to": 9
+  },
+  {
+   "key": "dao02",
+   "book": "《道德经81章投资心法》",
+   "tagPrefix": "道",
+   "dir": "chapters",
+   "pad": 2,
+   "suffix": "章",
+   "from": 10,
+   "to": 18
+  },
+  {
+   "key": "dao03",
+   "book": "《道德经81章投资心法》",
+   "tagPrefix": "道",
+   "dir": "chapters",
+   "pad": 2,
+   "suffix": "章",
+   "from": 19,
+   "to": 27
+  },
+  {
+   "key": "dao04",
+   "book": "《道德经81章投资心法》",
+   "tagPrefix": "道",
+   "dir": "chapters",
+   "pad": 2,
+   "suffix": "章",
+   "from": 28,
+   "to": 36
+  },
+  {
+   "key": "dao05",
+   "book": "《道德经81章投资心法》",
+   "tagPrefix": "道",
+   "dir": "chapters",
+   "pad": 2,
+   "suffix": "章",
+   "from": 37,
+   "to": 45
+  },
+  {
+   "key": "dao06",
+   "book": "《道德经81章投资心法》",
+   "tagPrefix": "道",
+   "dir": "chapters",
+   "pad": 2,
+   "suffix": "章",
+   "from": 46,
+   "to": 54
+  },
+  {
+   "key": "dao07",
+   "book": "《道德经81章投资心法》",
+   "tagPrefix": "道",
+   "dir": "chapters",
+   "pad": 2,
+   "suffix": "章",
+   "from": 55,
+   "to": 63
+  },
+  {
+   "key": "dao08",
+   "book": "《道德经81章投资心法》",
+   "tagPrefix": "道",
+   "dir": "chapters",
+   "pad": 2,
+   "suffix": "章",
+   "from": 64,
+   "to": 72
+  },
+  {
+   "key": "dao09",
+   "book": "《道德经81章投资心法》",
+   "tagPrefix": "道",
+   "dir": "chapters",
+   "pad": 2,
+   "suffix": "章",
+   "from": 73,
+   "to": 81
+  },
+  {
+   "key": "codex01",
+   "book": "《道德经81章投资心法·Codex版本》",
+   "tagPrefix": "Codex",
+   "dir": "codex",
+   "pad": 2,
+   "suffix": "章",
+   "from": 1,
+   "to": 9
+  },
+  {
+   "key": "codex02",
+   "book": "《道德经81章投资心法·Codex版本》",
+   "tagPrefix": "Codex",
+   "dir": "codex",
+   "pad": 2,
+   "suffix": "章",
+   "from": 10,
+   "to": 18
+  },
+  {
+   "key": "codex03",
+   "book": "《道德经81章投资心法·Codex版本》",
+   "tagPrefix": "Codex",
+   "dir": "codex",
+   "pad": 2,
+   "suffix": "章",
+   "from": 19,
+   "to": 27
+  },
+  {
+   "key": "codex04",
+   "book": "《道德经81章投资心法·Codex版本》",
+   "tagPrefix": "Codex",
+   "dir": "codex",
+   "pad": 2,
+   "suffix": "章",
+   "from": 28,
+   "to": 36
+  },
+  {
+   "key": "codex05",
+   "book": "《道德经81章投资心法·Codex版本》",
+   "tagPrefix": "Codex",
+   "dir": "codex",
+   "pad": 2,
+   "suffix": "章",
+   "from": 37,
+   "to": 45
+  },
+  {
+   "key": "codex06",
+   "book": "《道德经81章投资心法·Codex版本》",
+   "tagPrefix": "Codex",
+   "dir": "codex",
+   "pad": 2,
+   "suffix": "章",
+   "from": 46,
+   "to": 54
+  },
+  {
+   "key": "codex07",
+   "book": "《道德经81章投资心法·Codex版本》",
+   "tagPrefix": "Codex",
+   "dir": "codex",
+   "pad": 2,
+   "suffix": "章",
+   "from": 55,
+   "to": 63
+  },
+  {
+   "key": "codex08",
+   "book": "《道德经81章投资心法·Codex版本》",
+   "tagPrefix": "Codex",
+   "dir": "codex",
+   "pad": 2,
+   "suffix": "章",
+   "from": 64,
+   "to": 72
+  },
+  {
+   "key": "codex09",
+   "book": "《道德经81章投资心法·Codex版本》",
+   "tagPrefix": "Codex",
+   "dir": "codex",
+   "pad": 2,
+   "suffix": "章",
+   "from": 73,
+   "to": 81
+  },
+  {
+   "key": "eye01",
+   "book": "《第三只眼观投资心法》读书笔记",
+   "tagPrefix": "三眼",
+   "dir": "thethirdeye",
+   "pad": 3,
+   "suffix": "章",
+   "from": 1,
+   "to": 13
+  },
+  {
+   "key": "eye02",
+   "book": "《第三只眼观投资心法》读书笔记",
+   "tagPrefix": "三眼",
+   "dir": "thethirdeye",
+   "pad": 3,
+   "suffix": "章",
+   "from": 14,
+   "to": 26
+  },
+  {
+   "key": "eye03",
+   "book": "《第三只眼观投资心法》读书笔记",
+   "tagPrefix": "三眼",
+   "dir": "thethirdeye",
+   "pad": 3,
+   "suffix": "章",
+   "from": 27,
+   "to": 39
+  },
+  {
+   "key": "eye04",
+   "book": "《第三只眼观投资心法》读书笔记",
+   "tagPrefix": "三眼",
+   "dir": "thethirdeye",
+   "pad": 3,
+   "suffix": "章",
+   "from": 40,
+   "to": 52
+  },
+  {
+   "key": "eye05",
+   "book": "《第三只眼观投资心法》读书笔记",
+   "tagPrefix": "三眼",
+   "dir": "thethirdeye",
+   "pad": 3,
+   "suffix": "章",
+   "from": 53,
+   "to": 65
+  },
+  {
+   "key": "eye06",
+   "book": "《第三只眼观投资心法》读书笔记",
+   "tagPrefix": "三眼",
+   "dir": "thethirdeye",
+   "pad": 3,
+   "suffix": "章",
+   "from": 66,
+   "to": 78
+  },
+  {
+   "key": "eye07",
+   "book": "《第三只眼观投资心法》读书笔记",
+   "tagPrefix": "三眼",
+   "dir": "thethirdeye",
+   "pad": 3,
+   "suffix": "章",
+   "from": 79,
+   "to": 91
+  },
+  {
+   "key": "eye08",
+   "book": "《第三只眼观投资心法》读书笔记",
+   "tagPrefix": "三眼",
+   "dir": "thethirdeye",
+   "pad": 3,
+   "suffix": "章",
+   "from": 92,
+   "to": 104
+  },
+  {
+   "key": "eye09",
+   "book": "《第三只眼观投资心法》读书笔记",
+   "tagPrefix": "三眼",
+   "dir": "thethirdeye",
+   "pad": 3,
+   "suffix": "章",
+   "from": 105,
+   "to": 117
+  },
+  {
+   "key": "eye10",
+   "book": "《第三只眼观投资心法》读书笔记",
+   "tagPrefix": "三眼",
+   "dir": "thethirdeye",
+   "pad": 3,
+   "suffix": "章",
+   "from": 118,
+   "to": 130
+  },
+  {
+   "key": "eye11",
+   "book": "《第三只眼观投资心法》读书笔记",
+   "tagPrefix": "三眼",
+   "dir": "thethirdeye",
+   "pad": 3,
+   "suffix": "章",
+   "from": 131,
+   "to": 143
+  },
+  {
+   "key": "eye12",
+   "book": "《第三只眼观投资心法》读书笔记",
+   "tagPrefix": "三眼",
+   "dir": "thethirdeye",
+   "pad": 3,
+   "suffix": "章",
+   "from": 144,
+   "to": 151
+  },
+  {
+   "key": "jin01",
+   "book": "金冰《人生悟道 渡人渡己·投资篇》读书心法",
+   "tagPrefix": "金",
+   "dir": "jinbing-drdj",
+   "pad": 2,
+   "suffix": "篇",
+   "from": 1,
+   "to": 9
+  },
+  {
+   "key": "jin02",
+   "book": "金冰《人生悟道 渡人渡己·投资篇》读书心法",
+   "tagPrefix": "金",
+   "dir": "jinbing-drdj",
+   "pad": 2,
+   "suffix": "篇",
+   "from": 10,
+   "to": 18
+  },
+  {
+   "key": "jin03",
+   "book": "金冰《人生悟道 渡人渡己·投资篇》读书心法",
+   "tagPrefix": "金",
+   "dir": "jinbing-drdj",
+   "pad": 2,
+   "suffix": "篇",
+   "from": 19,
+   "to": 27
+  },
+  {
+   "key": "jin04",
+   "book": "金冰《人生悟道 渡人渡己·投资篇》读书心法",
+   "tagPrefix": "金",
+   "dir": "jinbing-drdj",
+   "pad": 2,
+   "suffix": "篇",
+   "from": 28,
+   "to": 36
+  },
+  {
+   "key": "jin05",
+   "book": "金冰《人生悟道 渡人渡己·投资篇》读书心法",
+   "tagPrefix": "金",
+   "dir": "jinbing-drdj",
+   "pad": 2,
+   "suffix": "篇",
+   "from": 37,
+   "to": 45
+  },
+  {
+   "key": "jin06",
+   "book": "金冰《人生悟道 渡人渡己·投资篇》读书心法",
+   "tagPrefix": "金",
+   "dir": "jinbing-drdj",
+   "pad": 2,
+   "suffix": "篇",
+   "from": 46,
+   "to": 54
+  },
+  {
+   "key": "jin07",
+   "book": "金冰《人生悟道 渡人渡己·投资篇》读书心法",
+   "tagPrefix": "金",
+   "dir": "jinbing-drdj",
+   "pad": 2,
+   "suffix": "篇",
+   "from": 55,
+   "to": 63
+  },
+  {
+   "key": "jin08",
+   "book": "金冰《人生悟道 渡人渡己·投资篇》读书心法",
+   "tagPrefix": "金",
+   "dir": "jinbing-drdj",
+   "pad": 2,
+   "suffix": "篇",
+   "from": 64,
+   "to": 72
+  },
+  {
+   "key": "compass1",
+   "book": "《道德经》里的投资心法（罗盘长文）",
+   "file": "compass_artifact_wf-d0d02179-2831-5be7-9f02-a4eaf1c20c97_text_markdown.md",
+   "entries": "第 1–54 条",
+   "tagPrefix": "罗盘"
+  },
+  {
+   "key": "compass2",
+   "book": "《道德经》里的投资心法（罗盘长文）",
+   "file": "compass_artifact_wf-d0d02179-2831-5be7-9f02-a4eaf1c20c97_text_markdown.md",
+   "entries": "第 55–108 条",
+   "tagPrefix": "罗盘"
+  },
+  {
+   "key": "sel",
+   "book": "《投资心法100条精选版》",
+   "file": "投资心法100条精选版.md",
+   "entries": "第 1–100 条",
+   "tagPrefix": "选"
+  },
+  {
+   "key": "all1",
+   "book": "《投资心法313条全量版》",
+   "file": "投资心法313条全量版.md",
+   "entries": "第 1–157 条",
+   "tagPrefix": "全"
+  },
+  {
+   "key": "all2",
+   "book": "《投资心法313条全量版》",
+   "file": "投资心法313条全量版.md",
+   "entries": "第 158–313 条",
+   "tagPrefix": "全"
+  }
+ ],
+ "categories": [
+  {
+   "code": "C01",
+   "name": "仓位与集中",
+   "desc": "单票上限、家数、满仓禁令、集中与分散的行为规则"
+  },
+  {
+   "code": "C02",
+   "name": "杠杆与本金",
+   "desc": "不融资、不加杠杆、本金不归零、不碰会被强平的工具"
+  },
+  {
+   "code": "C03",
+   "name": "现金与生存层",
+   "desc": "应急金、现金线、几年内要用的钱不入市、生活费备足"
+  },
+  {
+   "code": "C04",
+   "name": "买入闸门",
+   "desc": "下单前必答的问题、必写的东西、写不出就不买"
+  },
+  {
+   "code": "C05",
+   "name": "估值与安全边际",
+   "desc": "估值区间、先估价值再看价格、精确目标价存疑"
+  },
+  {
+   "code": "C06",
+   "name": "卖出与认错",
+   "desc": "止损、认错价、证伪即卖、理由消失就卖、翻倍收本"
+  },
+  {
+   "code": "C07",
+   "name": "加仓与减仓",
+   "desc": "分批、追高禁令、冷却期、高估分批减、空仓测试"
+  },
+  {
+   "code": "C08",
+   "name": "频率与节律",
+   "desc": "交易笔数上限、看盘次数、复核周期、体检频率"
+  },
+  {
+   "code": "C09",
+   "name": "信息与研究",
+   "desc": "信息源清理、独立证据、一手渠道、对手盘台词、研究笔记"
+  },
+  {
+   "code": "C10",
+   "name": "心力与身体",
+   "desc": "失眠即超限、情绪日不交易、睡眠运动家人、晒收益暂停"
+  },
+  {
+   "code": "C11",
+   "name": "复盘与记录",
+   "desc": "交易日志、归因、错因归层、年度审计、只与自己比"
+  },
+  {
+   "code": "C12",
+   "name": "周期与逆向",
+   "desc": "钟摆判断、热度判断、人声鼎沸只减不加、这次不一样即停手"
+  },
+  {
+   "code": "C13",
+   "name": "分散与相关性",
+   "desc": "同一因子重新分散、股债现金层次、再平衡"
+  },
+  {
+   "code": "C14",
+   "name": "时间与持有期",
+   "desc": "最短服役期、不设涨到多少的时间表、慢策略年限"
+  },
+  {
+   "code": "C15",
+   "name": "费用与税",
+   "desc": "费率超本金比例砍交易、成本纪律"
+  },
+  {
+   "code": "C16",
+   "name": "衍生品与做空",
+   "desc": "准入闸门、不祥之器、能不用就不用"
+  },
+  {
+   "code": "C17",
+   "name": "制度与分工",
+   "desc": "两人搭伙一买一卖、全职条件、修订一年一次、盘中不改规则"
+  },
+  {
+   "code": "C18",
+   "name": "学习与修炼",
+   "desc": "失败案例精读、读年报、书单次序、能力圈边界"
+  }
+ ],
+ "compassFile": "compass_artifact_wf-d0d02179-2831-5be7-9f02-a4eaf1c20c97_text_markdown.md"
+}

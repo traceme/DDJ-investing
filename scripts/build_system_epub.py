@@ -39,8 +39,9 @@ class Edition:
     subtitle: str
     book_id: str
     eyebrow: str
-    cover_motif: str          # "compass" | "seal"
+    cover_motif: str          # "compass" | "seal" | "eight" | "twelve" | "tablet"
     cover_caption: str
+    split_h3: tuple = ()      # ((H2 前缀, 页面短前缀), …)：该 H2 之下的 H3 各自成页
 
 
 EDITIONS = {
@@ -54,6 +55,40 @@ EDITIONS = {
         eyebrow="九 维 · 十二 章 · 十四 表",
         cover_motif="compass",
         cover_caption="从五部心法穷举而成的一套操作系统",
+    ),
+    "playbook": Edition(
+        key="playbook",
+        source=ROOT / "道德经投资打法手册.md",
+        output=ROOT / "道德经投资打法手册.epub",
+        title="道德经投资打法手册",
+        subtitle="八个决策点 · 四类生意 · 一套参数",
+        book_id="ddj-investing-playbook",
+        eyebrow="从 心 法 到 打 法",
+        cover_motif="eight",
+        cover_caption="把《道德经》投资心法换算成可执行的决策规则",
+    ),
+    "catalog": Edition(
+        key="catalog",
+        source=ROOT / "投资纪律总表.md",
+        output=ROOT / "投资纪律总表.epub",
+        title="投资纪律总表",
+        subtitle="三百六十条 · 逐字核对来源",
+        book_id="ddj-investing-discipline-catalog",
+        eyebrow="十 八 类 · 四 种 形 态",
+        cover_motif="tablet",
+        cover_caption="五部心法语料中的每一条行为纪律",
+        split_h3=(("第二部分", "纪律一览"), ("附录 A", "来源与引文")),
+    ),
+    "system": Edition(
+        key="system",
+        source=ROOT / "道德经投资系统.md",
+        output=ROOT / "道德经投资系统.epub",
+        title="道德经投资系统",
+        subtitle="宪法 · 状态机 · 权限引擎",
+        book_id="ddj-investing-system",
+        eyebrow="三 百 六 十 条 纪 律 · 一 台 机 器",
+        cover_motif="twelve",
+        cover_caption="一台让你在最坏的日子也只能做对的事的机器",
     ),
     "ddj": Edition(
         key="ddj",
@@ -105,21 +140,36 @@ class Section:
 
     @property
     def is_part(self) -> bool:
-        return bool(re.match(r"^第[一二三]部分|^附录$", self.title.strip()))
+        """扉页：标题像分部标题，且正文只有一小段导语——没有表格、没有小节、不长。"""
+        if not re.match(r"^第[一二三]部分[^·]*$|^第[一二三]部分 · [^·]+$|^附录$", self.title.strip()):
+            return False
+        body = "\n".join(self.lines)
+        if re.search(r"^\s*\|", body, flags=re.M) or re.search(r"^###", body, flags=re.M):
+            return False
+        return len(re.sub(r"\s", "", body)) < 400
 
 
-def parse_document(source: Path) -> list[Section]:
+def parse_document(source: Path, split_h3: tuple = ()) -> list[Section]:
     text = source.read_text(encoding="utf-8")
     sections: list[Section] = []
     current: Section | None = None
     index = 0
+    in_split = ""               # 非空＝当前 H2 之下的 H3 各自成页，值为页面短前缀
     for line in text.split("\n"):
+        m3 = re.match(r"^### (.+?)\s*$", line)
+        if m3 and in_split:
+            index += 1
+            current = Section(index=index, title=f"{in_split} · {m3.group(1).strip()}")
+            sections.append(current)
+            continue
         m = re.match(r"^## (.+?)\s*$", line)
         if m:
             title = m.group(1).strip()
             if title == "目录":          # EPUB 自带导航，跳过正文目录
                 current = None
+                in_split = ""
                 continue
+            in_split = next((lbl for pfx, lbl in split_h3 if title.startswith(pfx)), "")
             index += 1
             current = Section(index=index, title=title)
             sections.append(current)
@@ -532,6 +582,48 @@ def build_cover(path: Path, ed: Edition) -> None:
             x2, y2 = cx + 246 * cos(ang), cy - 246 * sin(ang)
             draw.line((x1, y1, x2, y2), fill=pale_gold if k % 2 else green, width=4)
         draw.ellipse((cx - 16, cy - 16, cx + 16, cy + 16), fill=gold)
+    elif ed.cover_motif == "tablet":
+        # 律碑：一方碑石，碑面十八道横线＝十八类；碑首一枚朱印
+        draw.rounded_rectangle((cx - 178, cy - 250, cx + 178, cy + 250), radius=14,
+                               outline=green, width=6)
+        draw.rounded_rectangle((cx - 150, cy - 222, cx + 150, cy + 222), radius=8,
+                               outline=pale_gold, width=2)
+        for k in range(18):
+            y = cy - 186 + k * 22
+            w = 112 if k % 6 == 0 else 78
+            draw.line((cx - w, y, cx + w, y), fill=gold if k % 6 == 0 else pale_gold,
+                      width=5 if k % 6 == 0 else 3)
+        draw.ellipse((cx - 26, cy + 176, cx + 26, cy + 228), outline=gold, width=5)
+        draw.ellipse((cx - 11, cy + 191, cx + 11, cy + 213), fill=gold)
+    elif ed.cover_motif == "twelve":
+        # 十二条宪法：外环十二格刻度；内方是法（不可修改的四条为实心）
+        from math import cos, radians, sin
+        draw.ellipse((cx - 250, cy - 250, cx + 250, cy + 250), outline=green, width=6)
+        for k in range(12):
+            ang = radians(90 - k * 30)
+            x1, y1 = cx + 214 * cos(ang), cy - 214 * sin(ang)
+            x2, y2 = cx + 246 * cos(ang), cy - 246 * sin(ang)
+            draw.line((x1, y1, x2, y2), fill=gold if k in (0, 3, 4, 11) else pale_gold, width=8 if k in (0, 3, 4, 11) else 4)
+        draw.rounded_rectangle((cx - 110, cy - 110, cx + 110, cy + 110), radius=6, outline=gold, width=5)
+        draw.rounded_rectangle((cx - 62, cy - 62, cx + 62, cy + 62), radius=4, outline=pale_gold, width=3)
+        draw.ellipse((cx - 14, cy - 14, cx + 14, cy + 14), fill=gold)
+    elif ed.cover_motif == "eight":
+        # 八个决策点：环上八个节点首尾相连，是一笔交易的顺序，也是复利的一圈
+        from math import cos, radians, sin
+        draw.ellipse((cx - 250, cy - 250, cx + 250, cy + 250), outline=green, width=6)
+        pts = []
+        for k in range(8):
+            ang = radians(90 - k * 45)
+            pts.append((cx + 250 * cos(ang), cy - 250 * sin(ang)))
+        for k, (x, y) in enumerate(pts):
+            r = 22 if k == 0 else 16
+            draw.ellipse((x - r, y - r, x + r, y + r), fill=gold if k == 0 else background,
+                         outline=gold, width=4)
+        for k in range(8):
+            (x1, y1), (x2, y2) = pts[k], pts[(k + 1) % 8]
+            draw.line((x1, y1, x2, y2), fill=pale_gold, width=3)
+        draw.ellipse((cx - 96, cy - 96, cx + 96, cy + 96), outline=gold, width=4)
+        draw.ellipse((cx - 16, cy - 16, cx + 16, cy + 16), fill=gold)
     else:
         # 对照：左半印文、右半罗盘弧，一条竖线把两者对齐
         draw.ellipse((cx - 250, cy - 250, cx + 250, cy + 250), outline=green, width=6)
@@ -800,10 +892,31 @@ def validate_epub(output: Path, ed: Edition, sections: list[Section]) -> None:
         joined = "".join(
             archive.read(f"EPUB/{sec.href}").decode("utf-8") for sec in sections
         )
-        for probe in ("附录A", "免责声明", "第十二章"):
+        probes = {
+            "playbook": ("附录 A", "免责声明", "第十七章", "R4.6", "案例账户", "《道德经》第"),
+            "system": ("附录 A", "免责声明", "第七章", "宪十二", "C01-001", "《道德经》第"),
+            "catalog": ("附录 A", "第一部分", "第五部分", "C01-001", "C18-022", "铁律"),
+        }.get(ed.key, ("附录A", "免责声明", "第十二章"))
+        for probe in probes:
             if probe not in joined:
                 raise ValueError(f"成书正文缺少「{probe}」")
-        if ed.key == "ddj":
+        if ed.key == "catalog":
+            n_id = len(set(re.findall(r"C\d\d-\d{3}", joined)))
+            if n_id < 360:
+                raise ValueError(f"纪律总表只剩 {n_id} 个编号（应为 360），疑似转换丢失")
+        if ed.key in ("playbook", "system", "catalog"):
+            for bad in ("150万", "1.5M", "traceme", "discovery-invest"):
+                if bad in joined:
+                    raise ValueError(f"{ed.title}正文含不应出现的字符串「{bad}」")
+            nq = joined.count("《道德经》第")
+            floor = {"playbook": 30, "system": 15, "catalog": 0}.get(ed.key, 15)
+            if nq < floor:
+                raise ValueError(f"{ed.title}的《道德经》引文只剩 {nq} 处（下限 {floor}），疑似转换丢失")
+        if ed.key == "system":
+            nrow = joined.count("C0") + joined.count("C1")
+            if nrow < 360:
+                raise ValueError(f"系统的矩阵编号只剩 {nrow} 处，疑似转换丢失")
+        elif ed.key == "ddj":
             n = joined.count("ddj-full") + joined.count("ddj-inline")
             if n < 600:
                 raise ValueError(f"对照版原文标注只剩 {n} 处，疑似转换丢失")
@@ -816,7 +929,7 @@ def validate_epub(output: Path, ed: Edition, sections: list[Section]) -> None:
 def build_edition(ed: Edition) -> None:
     if not ed.source.exists():
         raise FileNotFoundError(f"缺少源文件：{ed.source}")
-    sections = parse_document(ed.source)
+    sections = parse_document(ed.source, ed.split_h3)
     for sec in sections:
         sec.subheads = collect_subheads(sec.lines)
     with tempfile.TemporaryDirectory() as tmp:

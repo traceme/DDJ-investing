@@ -18,10 +18,13 @@ Then visit `http://localhost:8000` and verify navigation, search, chapter pagina
 python3 scripts/build_codex_epub.py
 python3 scripts/build_selection_epub.py
 python3 scripts/build_jinbing_epub.py
-python3 scripts/build_system_epub.py        # 两版一起构建；可加 plain / ddj 只建一版
+python3 scripts/build_system_epub.py        # 五版一起构建；可加 plain / ddj / playbook / catalog / system 只建一版
+python3 playbook/assemble_book.py && python3 scripts/build_system_epub.py playbook   # 打法手册：先装配再构建
+python3 system/render_catalog.py --render && python3 scripts/build_system_epub.py catalog   # 纪律总表：核对引文、渲染、构建 EPUB
+python3 system/assemble_system.py && python3 system/validate_system.py && python3 scripts/build_system_epub.py system   # 投资系统：装配、校验、构建
 ```
 
-These rebuild and validate the Codex EPUB, the 100-entry selection EPUB, the 72-article 渡人渡己 reading-notes EPUB, and both editions of 《投资体系与方法论》（无标注版与道德经对照版）; all require Python 3 and Pillow. The last one additionally verifies its quotes against the source PDF when it is present locally (PyMuPDF); the PDF itself is gitignored and never committed. Before committing, run:
+These rebuild and validate the Codex EPUB, the 100-entry selection EPUB, the 72-article 渡人渡己 reading-notes EPUB, both editions of 《投资体系与方法论》（无标注版与道德经对照版）, and 《道德经投资打法手册》 (assembled from `playbook/book/*.md` by `playbook/assemble_book.py`; run `python3 playbook/validate_book.py` first — it checks verbatim 《道德经》 quotes, registered rule IDs, lengths, and forbidden strings); plus 《道德经投资系统》 (assembled from `system/book/*.md`; `system/validate_system.py` asserts every cited `Cxx-nnn` exists in `system/data/纪律总表.json`, every `R` rule is registered, the 360-row matrix covers the catalog exactly, and 《道德经》 quotes are verbatim). `system/render_catalog.py` regenerates `投资纪律总表.md` and re-verifies all 2,526 quotes against the corpus files; `python3 scripts/build_system_epub.py catalog` builds `投资纪律总表.epub` (44 pages — the two long sections are split per category by the builder's `split_h3`, and the validator asserts all 360 ids survive the conversion). All require Python 3 and Pillow. The last one additionally verifies its quotes against the source PDF when it is present locally (PyMuPDF); the PDF itself is gitignored and never committed. Before committing, run:
 
 ```sh
 git diff --check

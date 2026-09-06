@@ -12,3 +12,9 @@ jinbing-drdj/*.pdf
 
 # Python 缓存
 __pycache__/
+
+# 打法手册样张含真实账户数字，不入库
+playbook/NBIS全程复盘·样张.md
+
+# 校验产物（每次运行重生成）
+system/data/引文核对失败.json
