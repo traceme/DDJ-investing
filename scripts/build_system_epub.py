@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
-"""Build 《投资体系与方法论》（无标注版 / 道德经对照版）as self-contained EPUB 3 books.
+"""Build the three rule-layer books as self-contained EPUB 3 files:
+《道德经投资打法手册》(playbook)、《投资纪律总表》(catalog)、《道德经投资系统》(system).
 
-与 build_codex/selection/jinbing 三个构建器不同，本书的正文是通用 Markdown
+与 build_codex/selection/jinbing 三个构建器不同，这三本的正文是通用 Markdown
 （含表格、ASCII 表单代码块、勾选清单、多级标题），因此这里带一个小而完整的
 Markdown → XHTML 转换器，而不是针对固定条目结构的解析器。
 
 用法：
-    python3 scripts/build_system_epub.py            # 两版都构建
-    python3 scripts/build_system_epub.py plain      # 只构建无标注版
-    python3 scripts/build_system_epub.py ddj        # 只构建道德经对照版
+    python3 scripts/build_system_epub.py            # 三本都构建
+    python3 scripts/build_system_epub.py catalog    # 只构建其中一本（playbook / catalog / system）
+
+EPUB 样式约束：表格与 <pre> 不得使用 overflow——带 overflow 的盒子在分页阅读器里是
+不可分割的整体，超过一屏的内容会整段渲染成空白页。
 """
 
 from __future__ import annotations
@@ -39,23 +42,12 @@ class Edition:
     subtitle: str
     book_id: str
     eyebrow: str
-    cover_motif: str          # "compass" | "seal" | "eight" | "twelve" | "tablet"
+    cover_motif: str          # "tablet" | "twelve" | "eight"
     cover_caption: str
     split_h3: tuple = ()      # ((H2 前缀, 页面短前缀), …)：该 H2 之下的 H3 各自成页
 
 
 EDITIONS = {
-    "plain": Edition(
-        key="plain",
-        source=ROOT / "投资体系与方法论.md",
-        output=ROOT / "投资体系与方法论.epub",
-        title="投资体系与方法论",
-        subtitle="九维实操手册",
-        book_id="ddj-investing-system-manual",
-        eyebrow="九 维 · 十二 章 · 十四 表",
-        cover_motif="compass",
-        cover_caption="从五部心法穷举而成的一套操作系统",
-    ),
     "playbook": Edition(
         key="playbook",
         source=ROOT / "道德经投资打法手册.md",
@@ -89,17 +81,6 @@ EDITIONS = {
         eyebrow="三 百 六 十 条 纪 律 · 一 台 机 器",
         cover_motif="twelve",
         cover_caption="一台让你在最坏的日子也只能做对的事的机器",
-    ),
-    "ddj": Edition(
-        key="ddj",
-        source=ROOT / "投资体系与方法论·道德经对照版.md",
-        output=ROOT / "投资体系与方法论·道德经对照版.epub",
-        title="投资体系与方法论",
-        subtitle="道德经原文对照版",
-        book_id="ddj-investing-system-manual-ddj",
-        eyebrow="八十一 章 · 原 文 对 照",
-        cover_motif="seal",
-        cover_caption="每条原则与规则，各归其位于《道德经》",
     ),
 }
 
@@ -571,18 +552,7 @@ def build_cover(path: Path, ed: Edition) -> None:
     centered_text(draw, 160, ed.eyebrow, get_font(48), gold, spacing=6)
 
     cx, cy = 800, 640
-    if ed.cover_motif == "compass":
-        # 九维罗盘：九根辐条＝九个维度，内圈是不动的中心（生存层）
-        draw.ellipse((cx - 250, cy - 250, cx + 250, cy + 250), outline=green, width=6)
-        draw.ellipse((cx - 96, cy - 96, cx + 96, cy + 96), outline=gold, width=4)
-        from math import cos, radians, sin
-        for k in range(9):
-            ang = radians(90 - k * 40)
-            x1, y1 = cx + 100 * cos(ang), cy - 100 * sin(ang)
-            x2, y2 = cx + 246 * cos(ang), cy - 246 * sin(ang)
-            draw.line((x1, y1, x2, y2), fill=pale_gold if k % 2 else green, width=4)
-        draw.ellipse((cx - 16, cy - 16, cx + 16, cy + 16), fill=gold)
-    elif ed.cover_motif == "tablet":
+    if ed.cover_motif == "tablet":
         # 律碑：一方碑石，碑面十八道横线＝十八类；碑首一枚朱印
         draw.rounded_rectangle((cx - 178, cy - 250, cx + 178, cy + 250), radius=14,
                                outline=green, width=6)
@@ -624,22 +594,6 @@ def build_cover(path: Path, ed: Edition) -> None:
             draw.line((x1, y1, x2, y2), fill=pale_gold, width=3)
         draw.ellipse((cx - 96, cy - 96, cx + 96, cy + 96), outline=gold, width=4)
         draw.ellipse((cx - 16, cy - 16, cx + 16, cy + 16), fill=gold)
-    else:
-        # 对照：左半印文、右半罗盘弧，一条竖线把两者对齐
-        draw.ellipse((cx - 250, cy - 250, cx + 250, cy + 250), outline=green, width=6)
-        draw.line((cx, cy - 250, cx, cy + 250), fill=gold, width=4)
-        draw.rounded_rectangle((cx - 196, cy - 130, cx - 40, cy + 130), radius=8,
-                               outline=gold, width=5)
-        for k, dy in enumerate((-72, -8, 56)):
-            draw.line((cx - 160, cy + dy, cx - 76, cy + dy), fill=gold, width=6)
-        from math import cos, radians, sin
-        for k in range(4):
-            ang = radians(60 - k * 40)
-            x1, y1 = cx + 60 * cos(ang), cy - 60 * sin(ang)
-            x2, y2 = cx + 208 * cos(ang), cy - 208 * sin(ang)
-            draw.line((x1, y1, x2, y2), fill=green, width=4)
-        draw.ellipse((cx - 12, cy - 12, cx + 12, cy + 12), fill=gold)
-
     centered_text(draw, 1060, ed.title, get_font(150), ink)
     centered_text(draw, 1265, ed.subtitle, get_font(76), green, spacing=6)
     draw.line((520, 1420, 1080, 1420), fill=pale_gold, width=3)
@@ -930,10 +884,6 @@ def validate_epub(output: Path, ed: Edition, sections: list[Section]) -> None:
             nrow = joined.count("C0") + joined.count("C1")
             if nrow < 360:
                 raise ValueError(f"系统的矩阵编号只剩 {nrow} 处，疑似转换丢失")
-        elif ed.key == "ddj":
-            n = joined.count("ddj-full") + joined.count("ddj-inline")
-            if n < 600:
-                raise ValueError(f"对照版原文标注只剩 {n} 处，疑似转换丢失")
         else:
             if "▍" in joined:
                 raise ValueError("无标注版不应含 ▍ 原文标注")

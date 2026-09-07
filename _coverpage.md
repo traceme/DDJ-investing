@@ -14,8 +14,6 @@
 [💎 100条精选](投资心法100条精选版.md)
 [下载精选 EPUB](https://traceme.github.io/DDJ-investing/投资心法100条精选版.epub)
 [🧭 投资体系与方法论](投资体系与方法论.md)
-[下载体系 EPUB](https://traceme.github.io/DDJ-investing/投资体系与方法论.epub)
-[下载体系·道德经对照 EPUB](https://traceme.github.io/DDJ-investing/投资体系与方法论·道德经对照版.epub)
 [🗺️ 道德经投资打法手册](道德经投资打法手册.md)
 [下载打法手册 EPUB](https://traceme.github.io/DDJ-investing/道德经投资打法手册.epub)
 [⚖️ 投资纪律总表](投资纪律总表.md)
