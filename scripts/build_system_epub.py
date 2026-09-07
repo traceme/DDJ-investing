@@ -77,7 +77,7 @@ EDITIONS = {
         eyebrow="十 八 类 · 四 种 形 态",
         cover_motif="tablet",
         cover_caption="五部心法语料中的每一条行为纪律",
-        split_h3=(("第二部分", "纪律一览"), ("附录 A", "来源与引文")),
+        split_h3=(("第二部分", "纪律一览"), ("第四部分", "数字口径"), ("附录 A", "来源与引文")),
     ),
     "system": Edition(
         key="system",
@@ -717,7 +717,11 @@ hr.rule {
   border-top: 1px solid #ddd2b8;
 }
 pre {
-  overflow-x: auto;
+  /* 同表格：不用 overflow，改为折行，避免超过一屏的表单在分页阅读器里整段空白 */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  page-break-inside: auto;
+  break-inside: auto;
   margin: 1em 0;
   padding: 0.9em 1em;
   border: 1px solid #e2d8c0;
@@ -727,17 +731,27 @@ pre {
   font-family: "Menlo", "Courier New", monospace;
   font-size: 0.72em;
   line-height: 1.5;
-  white-space: pre;
   text-align: left;
 }
-.tablewrap { overflow-x: auto; margin: 1em 0; }
-table { width: 100%; border-collapse: collapse; font-size: 0.86em; }
+/* 不给表格加 overflow：带 overflow 的盒子在分页阅读器里是不可分割的整体，
+   超过一屏的表会整段渲染成空白页；改为允许表格与行跨页断开、单元格内任意折行 */
+.tablewrap { margin: 1em 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86em;
+  page-break-inside: auto;
+  break-inside: auto;
+}
+tr { page-break-inside: auto; break-inside: auto; }
 th, td {
   padding: 0.45em 0.6em;
   border: 1px solid #ddd2b8;
   line-height: 1.65;
   text-align: left;
   vertical-align: top;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 th { background: #f4efe2; color: #2f624d; font-weight: 600; }
 ul.checklist { list-style: none; padding-left: 0.4em; }

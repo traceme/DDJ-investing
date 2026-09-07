@@ -169,17 +169,19 @@ def render(items, extra, cov, bad):
     # Part 4: numbers
     A('## 第四部分 · 数字口径总表')
     A('')
-    A('全部带数字的纪律汇成一张表——这是整套系统的常量表。同一纪律的多种口径并列，主口径在前。')
+    A('全部带数字的纪律——这是整套系统的常量表，按类别分表。同一纪律的多种口径并列，主口径在前，其他口径各附来源标签；主口径的全部出处按编号查附录 A。')
     A('')
-    A('| 编号 | 纪律 | 主口径 | 其他口径 | 来源 |')
-    A('|---|---|---|---|---|')
-    for code in CATS:
-        for d in by.get(code, []):
-            if d.get('number'):
-                vs = '；'.join(f'{v["value"]}（{"、".join(v["tags"])}）' for v in d.get('variants', []) if v.get('value') and v.get('value') != d.get('number'))
-                tags = '、'.join(sorted({s['tag'] for s in d['sources']}))
-                A(f'| {d["id"]} | {d["discipline"]} | {d["number"]} | {vs} | {tags} |')
-    A('')
+    for i, code in enumerate(CATS, 1):
+        rows = [d for d in by.get(code, []) if d.get('number')]
+        if not rows: continue
+        A(f'### {cn(i)}、{CATS[code]["name"]}（{len(rows)} 条）')
+        A('')
+        A('| 编号 | 纪律 | 主口径 | 其他口径 | 来源数 |')
+        A('|---|---|---|---|---|')
+        for d in rows:
+            vs = '；'.join(f'{v["value"]}（{"、".join(v["tags"])}）' for v in d.get('variants', []) if v.get('value') and v.get('value') != d.get('number'))
+            A(f'| {d["id"]} | {d["discipline"]} | {d["number"]} | {vs} | {len(d["sources"])} |')
+        A('')
     # Part 5: coverage
     A('## 第五部分 · 来源覆盖')
     A('')
