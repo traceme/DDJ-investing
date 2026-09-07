@@ -2,7 +2,7 @@
 
 - [🎧 有声书 · AI 朗读版](有声书.md)
 
-- [🧭 Codex版本 · 重悟新版](codex/README.md)
+- [🧭 Codex版本 · 重悟新版](codex/README.md)　[PDF](https://traceme.github.io/DDJ-investing/道德经81章投资心法Codex版本.pdf)
 
 - **道经 · 上篇（第1–37章）**
   - [第一章 · 道可道，非常道](chapters/第01章.md)
@@ -101,12 +101,12 @@
   - [⚙️ 道德经投资系统（宪法·状态机·权限）](道德经投资系统.md)　[EPUB](https://traceme.github.io/DDJ-investing/道德经投资系统.epub)　[PDF](https://traceme.github.io/DDJ-investing/道德经投资系统.pdf)
 
 - **三书提炼**
-  - [💎 投资心法 100 条精选](投资心法100条精选版.md)
+  - [💎 投资心法 100 条精选](投资心法100条精选版.md)　[PDF](https://traceme.github.io/DDJ-investing/投资心法100条精选版.pdf)
   - [投资心法 313 条全量](投资心法313条全量版.md)
 
 - **姊妹辑**
-  - [第三只眼观 · 投资心法（151篇）](thethirdeye/README.md)
-  - [📗 人生悟道 渡人渡己 · 投资篇（72篇）](jinbing-drdj/README.md)
+  - [第三只眼观 · 投资心法（151篇）](thethirdeye/README.md)　[PDF](https://traceme.github.io/DDJ-investing/第三只眼观投资心法.pdf)
+  - [📗 人生悟道 渡人渡己 · 投资篇（72篇）](jinbing-drdj/README.md)　[PDF](https://traceme.github.io/DDJ-investing/人生悟道渡人渡己投资篇读书心法.pdf)
 
 - **附录**
   - [原文底本 · 王弼本](原文/道德经-王弼本.md)

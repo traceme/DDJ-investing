@@ -4,7 +4,7 @@
 
 > **免责声明**：全书为哲学随笔与投资常识的融合，不构成任何具体投资建议。文中提及的行业、指数与历史行情均为示例或史实复盘，不代表任何推荐。
 
-📖 电子书：[下载 EPUB](https://traceme.github.io/DDJ-investing/道德经81章投资心法.epub)（含封面、分卷目录与底本附录，可导入微信读书、Apple Books、Kindle 等阅读器）
+📖 电子书：[下载 EPUB](https://traceme.github.io/DDJ-investing/道德经81章投资心法.epub)（含封面、分卷目录与底本附录，可导入微信读书、Apple Books、Kindle 等阅读器）／ [下载 PDF](https://traceme.github.io/DDJ-investing/道德经81章投资心法.pdf)（A4 排版，宋体正文、页眉章节、页脚页码与书签，适合打印与平板通读）
 
 🎧 有声书：[在线播放 / 下载 MP3](有声书.md)——全书 82 条音轨约 4 小时 54 分，微软神经语音「云扬」（新闻播音级男声）AI 朗读，含 ID3 标签可导入任意播放器。
 
@@ -24,25 +24,25 @@
 
 | 层 | 书 | 阅读 | EPUB | PDF | 规模 |
 |---|---|---|---|---|---|
-| 心法 | 道德经81章投资心法 | [目录](#目录) | [下载](https://traceme.github.io/DDJ-investing/道德经81章投资心法.epub) | — | 81 章，另有[有声书](有声书.md) |
-| 心法 | 道德经81章投资心法 · Codex 重悟版 | [codex/README.md](codex/README.md) | [下载](https://traceme.github.io/DDJ-investing/道德经81章投资心法Codex版本.epub) | — | 81 章 |
-| 心法 | 第三只眼观 · 投资心法 | [thethirdeye/README.md](thethirdeye/README.md) | [下载](https://traceme.github.io/DDJ-investing/第三只眼观投资心法.epub) | — | 151 篇 |
-| 心法 | 人生悟道 渡人渡己 · 投资篇读书心法 | [jinbing-drdj/README.md](jinbing-drdj/README.md) | [下载](https://traceme.github.io/DDJ-investing/人生悟道渡人渡己投资篇读书心法.epub) | — | 72 篇 |
-| 心法 | 投资心法 100 条精选 | [投资心法100条精选版.md](投资心法100条精选版.md) | [下载](https://traceme.github.io/DDJ-investing/投资心法100条精选版.epub) | — | 100 条（另有 [313 条全量](投资心法313条全量版.md)） |
+| 心法 | 道德经81章投资心法 | [目录](#目录) | [下载](https://traceme.github.io/DDJ-investing/道德经81章投资心法.epub) | [下载](https://traceme.github.io/DDJ-investing/道德经81章投资心法.pdf) | 81 章，另有[有声书](有声书.md) |
+| 心法 | 道德经81章投资心法 · Codex 重悟版 | [codex/README.md](codex/README.md) | [下载](https://traceme.github.io/DDJ-investing/道德经81章投资心法Codex版本.epub) | [下载](https://traceme.github.io/DDJ-investing/道德经81章投资心法Codex版本.pdf) | 81 章 |
+| 心法 | 第三只眼观 · 投资心法 | [thethirdeye/README.md](thethirdeye/README.md) | [下载](https://traceme.github.io/DDJ-investing/第三只眼观投资心法.epub) | [下载](https://traceme.github.io/DDJ-investing/第三只眼观投资心法.pdf) | 151 篇 |
+| 心法 | 人生悟道 渡人渡己 · 投资篇读书心法 | [jinbing-drdj/README.md](jinbing-drdj/README.md) | [下载](https://traceme.github.io/DDJ-investing/人生悟道渡人渡己投资篇读书心法.epub) | [下载](https://traceme.github.io/DDJ-investing/人生悟道渡人渡己投资篇读书心法.pdf) | 72 篇 |
+| 心法 | 投资心法 100 条精选 | [投资心法100条精选版.md](投资心法100条精选版.md) | [下载](https://traceme.github.io/DDJ-investing/投资心法100条精选版.epub) | [下载](https://traceme.github.io/DDJ-investing/投资心法100条精选版.pdf) | 100 条（另有 [313 条全量](投资心法313条全量版.md)） |
 | 综述 | 投资体系与方法论 · 九维实操手册 | [无标注版](投资体系与方法论.md) ／ [道德经对照版](投资体系与方法论·道德经对照版.md) | — | — | 22 万字，680 处原文标注 |
 | **法源** | **投资纪律总表** | [投资纪律总表.md](投资纪律总表.md) | [下载](https://traceme.github.io/DDJ-investing/投资纪律总表.epub) | [下载](https://traceme.github.io/DDJ-investing/投资纪律总表.pdf) | 360 条，18 类，2,526 处引文逐字核对 |
 | **算法** | **道德经投资打法手册** | [道德经投资打法手册.md](道德经投资打法手册.md) | [下载](https://traceme.github.io/DDJ-investing/道德经投资打法手册.epub) | [下载](https://traceme.github.io/DDJ-investing/道德经投资打法手册.pdf) | 17 章 ＋ 4 附录，54 条编号规则 |
 | **机器** | **道德经投资系统** | [道德经投资系统.md](道德经投资系统.md) | [下载](https://traceme.github.io/DDJ-investing/道德经投资系统.epub) | [下载](https://traceme.github.io/DDJ-investing/道德经投资系统.pdf) | 宪法十二条，360 行执行矩阵 |
 
-PDF 版为 A4 排版：宋体正文、黑体标题、页眉显示当前章节、页脚页码、带页码的目录与侧栏书签，表格跨页自动重复表头，适合打印或平板通读；EPUB 版适合手机与阅读器重排。
+每本都有 EPUB 与 PDF 两个版本、同一封面。PDF 为 A4 排版：宋体正文、黑体标题、页眉显示当前章节、页脚页码、带页码的目录与侧栏书签，表格跨页自动重复表头，适合打印或平板通读；EPUB 适合手机与阅读器重排。
 
 **怎么读。** 只想读随笔：从下面的[目录](#目录)任选一章。想拿到可执行的规则：先读《道德经投资系统》第一章——宪法十二条，一页纸；再按《打法手册》的八个决策点走一笔交易；《纪律总表》不必通读，被引用时按编号查。
 
 ## 各册简介
 
-🧭 重悟新版：[道德经81章投资心法Codex版本](codex/README.md)（[下载 Codex EPUB](https://traceme.github.io/DDJ-investing/道德经81章投资心法Codex版本.epub)）——从生活与市场场景切入，用大白话讲透章句、人性与投资方法，并附不超过100字的实操建议。
+🧭 重悟新版：[道德经81章投资心法Codex版本](codex/README.md)（[下载 Codex EPUB](https://traceme.github.io/DDJ-investing/道德经81章投资心法Codex版本.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/道德经81章投资心法Codex版本.pdf)）——从生活与市场场景切入，用大白话讲透章句、人性与投资方法，并附不超过100字的实操建议。
 
-💎 三书提炼：[投资心法 100 条精选](投资心法100条精选版.md)（[下载 EPUB](https://traceme.github.io/DDJ-investing/投资心法100条精选版.epub)）——把三本书 313 章合并成 100 条，按「生存性 > 根本性 > 三书共振」排序，每条附三书原文摘录；另有[全量 313 条](投资心法313条全量版.md)逐章不合并版。
+💎 三书提炼：[投资心法 100 条精选](投资心法100条精选版.md)（[下载 EPUB](https://traceme.github.io/DDJ-investing/投资心法100条精选版.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/投资心法100条精选版.pdf)）——把三本书 313 章合并成 100 条，按「生存性 > 根本性 > 三书共振」排序，每条附三书原文摘录；另有[全量 313 条](投资心法313条全量版.md)逐章不合并版。
 
 🧭 体系与方法论：[投资体系与方法论 · 九维实操手册](投资体系与方法论.md)——把五部心法组织成一套每天在运行的操作系统：导论的决策闭环、九个维度（认知／研究／风控／仓位／买卖点／周期／心力／纪律／修炼）、十二组分歧的裁决变量、日历化运行手册与十四份可复制表单，每条原则与数字均标出处。另有[《道德经》原文对照版](投资体系与方法论·道德经对照版.md)——同一部书，每条原则与规则各配最贴切的《道德经》原文，680 处标注覆盖八十一章，附逐章索引。
 
@@ -50,9 +50,9 @@ PDF 版为 A4 排版：宋体正文、黑体标题、页眉显示当前章节、
 
 ⚖️ 法源与机器：[投资纪律总表](投资纪律总表.md)（[下载 EPUB](https://traceme.github.io/DDJ-investing/投资纪律总表.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/投资纪律总表.pdf)）——五部心法语料中的全部 360 条行为纪律（铁律／条件律／门槛／节律），逐条归并、2,526 处引文逐字核对来源、47 处语料分歧单列、数字口径总表；[道德经投资系统](道德经投资系统.md)（[下载 EPUB](https://traceme.github.io/DDJ-investing/道德经投资系统.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/道德经投资系统.pdf)）——坐在纪律总表与打法手册之上的第四层：宪法十二条（一页纸）、账户与仓位状态机（今天允许做什么）、权限引擎（仓位与开仓权限由过程分、兑现触发、腿验证、违规记点四本账挣来与扣掉）、49 处分歧逐条裁决、五级审计与三层修宪、九张系统表单、360 行执行矩阵（每条纪律的检查时点、检测器、后果与承载机制，脚本核对 360／360）。
 
-📚 姊妹辑：[第三只眼观 · 投资心法](thethirdeye/README.md)——《第三只眼观》151篇文章的逐篇读书笔记（中心思想＋投资随笔），体例与本书一致。
+📚 姊妹辑：[第三只眼观 · 投资心法](thethirdeye/README.md)（[下载 EPUB](https://traceme.github.io/DDJ-investing/第三只眼观投资心法.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/第三只眼观投资心法.pdf)）——《第三只眼观》151篇文章的逐篇读书笔记（中心思想＋投资随笔），体例与本书一致。
 
-📗 读书心法：[人生悟道 渡人渡己 · 投资篇](jinbing-drdj/README.md)（[下载 EPUB](https://traceme.github.io/DDJ-investing/人生悟道渡人渡己投资篇读书心法.epub)）——金冰《人生悟道 渡人渡己·投资篇（纪念版）》72篇的逐篇读书笔记（中心思想＋投资心法＋实操建议），分基础、进阶、哲思三部；原书为免费公开分享项目，笔记不含原书正文。
+📗 读书心法：[人生悟道 渡人渡己 · 投资篇](jinbing-drdj/README.md)（[下载 EPUB](https://traceme.github.io/DDJ-investing/人生悟道渡人渡己投资篇读书心法.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/人生悟道渡人渡己投资篇读书心法.pdf)）——金冰《人生悟道 渡人渡己·投资篇（纪念版）》72篇的逐篇读书笔记（中心思想＋投资心法＋实操建议），分基础、进阶、哲思三部；原书为免费公开分享项目，笔记不含原书正文。
 
 ## 目录
 
@@ -158,7 +158,7 @@ python3 system/render_catalog.py --render    # 纪律总表：2,526 处引文逐
 python3 system/assemble_system.py && python3 system/validate_system.py   # 投资系统：装配 → 校验
 python3 playbook/assemble_book.py && python3 playbook/validate_book.py   # 打法手册：装配 → 校验
 python3 scripts/build_system_epub.py         # 规则层三本 EPUB（可加 playbook / catalog / system 只建一本）
-python3 scripts/build_pdf.py                 # 规则层三本 PDF（Chrome 排版 + PyMuPDF 装订；需 Chrome、PyMuPDF、fontTools）
+python3 scripts/build_pdf.py                 # 八本 PDF（Chrome 排版 + PyMuPDF 装订；需 Chrome、PyMuPDF、fontTools；可加书名键只建几本）
 ```
 
 校验器断言的事：纪律总表的每处引文逐字出现在所标篇章；投资系统引用的每个纪律编号存在、每条规则已注册、执行矩阵的编号集合与纪律总表完全相等、《道德经》引文逐字、记点级别与宪法一致；打法手册的每句《道德经》引文逐字、每个 R 编号已注册；三本都不含真实账户数字（案例账户归一为 100 单位）。
