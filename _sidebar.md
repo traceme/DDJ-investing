@@ -99,6 +99,7 @@
 - **法源与机器**
   - [⚖️ 投资纪律总表（360 条）](投资纪律总表.md)　[EPUB](https://traceme.github.io/DDJ-investing/投资纪律总表.epub)　[PDF](https://traceme.github.io/DDJ-investing/投资纪律总表.pdf)
   - [⚙️ 道德经投资系统（宪法·状态机·权限）](道德经投资系统.md)　[EPUB](https://traceme.github.io/DDJ-investing/道德经投资系统.epub)　[PDF](https://traceme.github.io/DDJ-investing/道德经投资系统.pdf)
+  - [🤖 股票量化投资系统（设计规格）](股票量化投资系统.md)　[EPUB](https://traceme.github.io/DDJ-investing/股票量化投资系统.epub)　[PDF](https://traceme.github.io/DDJ-investing/股票量化投资系统.pdf)
 
 - **三书提炼**
   - [💎 投资心法 100 条精选](投资心法100条精选版.md)　[PDF](https://traceme.github.io/DDJ-investing/投资心法100条精选版.pdf)

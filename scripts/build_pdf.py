@@ -164,16 +164,22 @@ RULES_META = "本书是方法论，不是荐股；示例参数来自归一为 10
 E = B.EDITIONS
 
 
-def rules_book(key: str, out: str, probes: tuple) -> Book:
+QUANT_META = "设计规格：程序、回测与模拟交易尚未实施，不可据此启用实盘；不构成任何具体投资建议"
+
+
+def rules_book(key: str, out: str, probes: tuple, meta: str = RULES_META) -> Book:
     ed = E[key]
-    return Book(key, ed.title, ed.subtitle, ed.eyebrow, ed.cover_caption, RULES_META, ROOT / out,
-                lambda: B.parse_document(ed.source, ed.split_h3), cover_from_edition(ed), probes)
+    return Book(key, ed.title, ed.subtitle, ed.eyebrow, ed.cover_caption, meta, ROOT / out,
+                lambda: B.parse_document(ed.source, ed.split_h3, ed.intro_title),
+                cover_from_edition(ed), probes)
 
 
 BOOKS: dict[str, Book] = {
     "playbook": rules_book("playbook", "道德经投资打法手册.pdf", ("R4.6", "案例账户", "附录 B")),
     "catalog": rules_book("catalog", "投资纪律总表.pdf", ("C01-001", "C18-022", "铁律")),
     "system": rules_book("system", "道德经投资系统.pdf", ("宪十二", "C01-001", "R18.20")),
+    "quant": rules_book("quant", "股票量化投资系统.pdf",
+                        ("设计规格 v1.0", "十三、实施交付", "legacy_playbook", "第48章"), QUANT_META),
     "ddj": Book("ddj", "道德经81章投资心法", "八十一章 · 逐章投资随笔", "以 王 弼 通 行 本 为 底 本",
                 "把章句引申为投资世界里的常识与纪律", ESSAY_META, ROOT / "道德经81章投资心法.pdf",
                 chapter_files("chapters/第*章.md"), cover_from_epub(ROOT / "道德经81章投资心法.epub"),
@@ -251,6 +257,7 @@ pre { font-family: Menlo, "SF Mono", monospace; font-size: 8.3pt; line-height: 1
       border: 0.5pt solid #e6dcc4; padding: 0.7em 0.9em; white-space: pre-wrap; overflow-wrap: anywhere;
       break-inside: avoid; page-break-inside: avoid; margin: 0.8em 0 1em; }
 code { font-family: Menlo, "SF Mono", monospace; font-size: 0.9em; background: #f4efe2; padding: 0 0.25em; }
+td.nw code { white-space: nowrap; overflow-wrap: normal; word-break: keep-all; }
 ul.checklist { list-style: none; padding-left: 0.3em; }
 ul.checklist li:before { content: "\\2610\\00a0"; color: #b18f43; }
 section.part { text-align: center; padding-top: 34%; }
@@ -335,7 +342,8 @@ def mark_wide_tables(doc: str) -> str:
     def first_cell(m):
         tag, attrs, inner = m.group(1), m.group(2), m.group(3)
         plain = re.sub(r"<[^>]+>", "", inner)
-        if len(plain) <= 14 and " " not in plain.strip():
+        width = sum(1 if ord(c) > 0x2E7F else 0.55 for c in plain)   # 按字宽估：西文约半个汉字宽
+        if width <= 14 and " " not in plain.strip():
             return f'<tr><{tag} class="nw"{attrs}>{inner}</{tag}>'
         return m.group(0)
     def fix(m):

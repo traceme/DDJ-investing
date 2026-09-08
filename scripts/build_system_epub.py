@@ -45,6 +45,7 @@ class Edition:
     cover_motif: str          # "tablet" | "twelve" | "eight"
     cover_caption: str
     split_h3: tuple = ()      # ((H2 前缀, 页面短前缀), …)：该 H2 之下的 H3 各自成页
+    intro_title: str = ""     # 非空＝首个 H2 之前的引言（H1 除外）自成一页，以此为页题
 
 
 EDITIONS = {
@@ -81,6 +82,18 @@ EDITIONS = {
         eyebrow="三 百 六 十 条 纪 律 · 一 台 机 器",
         cover_motif="twelve",
         cover_caption="一台让你在最坏的日子也只能做对的事的机器",
+    ),
+    "quant": Edition(
+        key="quant",
+        source=ROOT / "股票量化投资系统.md",
+        output=ROOT / "股票量化投资系统.epub",
+        title="股票量化投资系统",
+        subtitle="道德经 · 价值主线 · 程序守纪律",
+        book_id="ddj-investing-quant-system",
+        eyebrow="设 计 规 格 · 从 心 法 到 代 码",
+        cover_motif="three",
+        cover_caption="向外增加对企业的认识，向内减少无根据的行动",
+        intro_title="卷首",
     ),
 }
 
@@ -130,11 +143,17 @@ class Section:
         return len(re.sub(r"\s", "", body)) < 400
 
 
-def parse_document(source: Path, split_h3: tuple = ()) -> list[Section]:
+def parse_document(source: Path, split_h3: tuple = (), intro_title: str = "") -> list[Section]:
     text = source.read_text(encoding="utf-8")
     sections: list[Section] = []
     current: Section | None = None
     index = 0
+    if intro_title:
+        head = text.split("\n## ", 1)[0].split("\n")
+        intro = [l for l in head if not l.startswith("# ")]
+        if any(l.strip() for l in intro):
+            index += 1
+            sections.append(Section(index=index, title=intro_title, lines=intro))
     in_split = ""               # 非空＝当前 H2 之下的 H3 各自成页，值为页面短前缀
     for line in text.split("\n"):
         m3 = re.match(r"^### (.+?)\s*$", line)
@@ -193,10 +212,11 @@ def inline(text: str) -> str:
         ),
         text,
     )
-    # 链接
+    # 链接：站内路径（仓库文件、docsify 路由）在离线成书里无处可去，只留链接文字
     text = re.sub(
         r"\[([^\]]+)\]\(([^)]+)\)",
-        lambda m: stash(f'<a href="{esc(m.group(2))}">{esc(m.group(1))}</a>'),
+        lambda m: stash(f'<a href="{esc(m.group(2))}">{esc(m.group(1))}</a>'
+                        if re.match(r"^(https?:|mailto:|#)", m.group(2)) else esc(m.group(1))),
         text,
     )
     text = esc(text)
@@ -594,6 +614,17 @@ def build_cover(path: Path, ed: Edition) -> None:
             draw.line((x1, y1, x2, y2), fill=pale_gold, width=3)
         draw.ellipse((cx - 96, cy - 96, cx + 96, cy + 96), outline=gold, width=4)
         draw.ellipse((cx - 16, cy - 16, cx + 16, cy + 16), fill=gold)
+    elif ed.cover_motif == "three":
+        # 三情景估值：环内一枚正三角，三个顶点是熊／基／牛，重心一点是可执行买价
+        from math import cos, radians, sin
+        draw.ellipse((cx - 250, cy - 250, cx + 250, cy + 250), outline=green, width=6)
+        pts = [(cx + 190 * cos(radians(90 + k * 120)), cy - 190 * sin(radians(90 + k * 120))) for k in range(3)]
+        draw.polygon(pts, outline=gold, width=5)
+        for k, (x, y) in enumerate(pts):
+            r = 22 if k == 0 else 16
+            draw.ellipse((x - r, y - r, x + r, y + r), fill=gold if k == 0 else background, outline=gold, width=4)
+        draw.line((cx - 250, cy + 95, cx + 250, cy + 95), fill=pale_gold, width=3)
+        draw.ellipse((cx - 16, cy - 16 + 30, cx + 16, cy + 16 + 30), fill=gold)
     centered_text(draw, 1060, ed.title, get_font(150), ink)
     centered_text(draw, 1265, ed.subtitle, get_font(76), green, spacing=6)
     draw.line((520, 1420, 1080, 1420), fill=pale_gold, width=3)
@@ -864,6 +895,7 @@ def validate_epub(output: Path, ed: Edition, sections: list[Section]) -> None:
             "playbook": ("附录 A", "免责声明", "第十七章", "R4.6", "案例账户", "《道德经》第"),
             "system": ("附录 A", "免责声明", "第七章", "宪十二", "C01-001", "《道德经》第"),
             "catalog": ("附录 A", "第一部分", "第五部分", "C01-001", "C18-022", "铁律"),
+            "quant": ("卷首", "设计规格 v1.0", "十三、实施交付", "legacy_playbook", "第48章", "MOS"),
         }.get(ed.key, ("附录A", "免责声明", "第十二章"))
         for probe in probes:
             if probe not in joined:
@@ -872,10 +904,13 @@ def validate_epub(output: Path, ed: Edition, sections: list[Section]) -> None:
             n_id = len(set(re.findall(r"C\d\d-\d{3}", joined)))
             if n_id < 360:
                 raise ValueError(f"纪律总表只剩 {n_id} 个编号（应为 360），疑似转换丢失")
-        if ed.key in ("playbook", "system", "catalog"):
+        if ed.key in ("playbook", "system", "catalog", "quant"):
             for bad in ("150万", "1.5M", "traceme", "discovery-invest"):
                 if bad in joined:
                     raise ValueError(f"{ed.title}正文含不应出现的字符串「{bad}」")
+            if re.search(r"<a href=\"/", joined):
+                raise ValueError(f"{ed.title}成书里残留站内链接")
+        if ed.key in ("playbook", "system", "catalog"):
             nq = joined.count("《道德经》第")
             floor = {"playbook": 30, "system": 15, "catalog": 0}.get(ed.key, 15)
             if nq < floor:
@@ -893,7 +928,7 @@ def validate_epub(output: Path, ed: Edition, sections: list[Section]) -> None:
 def build_edition(ed: Edition) -> None:
     if not ed.source.exists():
         raise FileNotFoundError(f"缺少源文件：{ed.source}")
-    sections = parse_document(ed.source, ed.split_h3)
+    sections = parse_document(ed.source, ed.split_h3, ed.intro_title)
     for sec in sections:
         sec.subheads = collect_subheads(sec.lines)
     with tempfile.TemporaryDirectory() as tmp:
