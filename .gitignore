@@ -18,3 +18,7 @@ playbook/NBIS全程复盘·样张.md
 
 # 校验产物（每次运行重生成）
 system/data/引文核对失败.json
+
+# 心性指南的语料挖掘中间产物不入库：主题档案里抄有金冰原书 <mark> 内的逐字短引，
+# 那类短引只能待在 jinbing-drdj/ 的 <mark> 里、由构建时逐字核验（见 mindset/design/DESIGN.md）
+mindset/design/themes/

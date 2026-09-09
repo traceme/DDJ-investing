@@ -95,6 +95,17 @@ EDITIONS = {
         cover_caption="向外增加对企业的认识，向内减少无根据的行动",
         intro_title="卷首",
     ),
+    "mind": Edition(
+        key="mind",
+        source=ROOT / "成功投资者心性养成指南.md",
+        output=ROOT / "成功投资者心性养成指南.epub",
+        title="成功投资者心性养成指南",
+        subtitle="戒掉一把梭 · 练成守得住",
+        book_id="ddj-investing-mindset",
+        eyebrow="自 胜 者 强 · 一 年 训 练 手 册",
+        cover_motif="ripple",
+        cover_caption="把《道德经》的心性换算成可计数的日常练习",
+    ),
 }
 
 XHTML_HEADER = """<?xml version="1.0" encoding="utf-8"?>
@@ -625,7 +636,17 @@ def build_cover(path: Path, ed: Edition) -> None:
             draw.ellipse((x - r, y - r, x + r, y + r), fill=gold if k == 0 else background, outline=gold, width=4)
         draw.line((cx - 250, cy + 95, cx + 250, cy + 95), fill=pale_gold, width=3)
         draw.ellipse((cx - 16, cy - 16 + 30, cx + 16, cy + 16 + 30), fill=gold)
-    centered_text(draw, 1060, ed.title, get_font(150), ink)
+    elif ed.cover_motif == "ripple":
+        # 守静：一枚石子落进静水，涟漪一圈圈散开——冲动会来，也会退
+        for k, r in enumerate((250, 190, 130, 72)):
+            draw.ellipse((cx - r, cy - r, cx + r, cy + r), outline=green if k == 0 else pale_gold,
+                         width=6 if k == 0 else 3)
+        draw.ellipse((cx - 16, cy - 16, cx + 16, cy + 16), fill=gold)
+        draw.line((cx - 250, cy + 300, cx + 250, cy + 300), fill=pale_gold, width=3)
+    size = 150
+    while size > 90 and draw.textlength(ed.title, font=get_font(size)) > 1380:
+        size -= 10
+    centered_text(draw, 1060 + (150 - size) // 2, ed.title, get_font(size), ink)
     centered_text(draw, 1265, ed.subtitle, get_font(76), green, spacing=6)
     draw.line((520, 1420, 1080, 1420), fill=pale_gold, width=3)
     centered_text(draw, 1480, ed.cover_caption, get_font(46), (101, 90, 70))
@@ -896,6 +917,7 @@ def validate_epub(output: Path, ed: Edition, sections: list[Section]) -> None:
             "system": ("附录 A", "免责声明", "第七章", "宪十二", "C01-001", "《道德经》第"),
             "catalog": ("附录 A", "第一部分", "第五部分", "C01-001", "C18-022", "铁律"),
             "quant": ("卷首", "设计规格 v1.0", "十三、实施交付", "legacy_playbook", "第48章", "MOS"),
+            "mind": ("卷首", "第一章", "附录 A", "免责声明", "案例账户", "《道德经》第", "T1.1"),
         }.get(ed.key, ("附录A", "免责声明", "第十二章"))
         for probe in probes:
             if probe not in joined:
@@ -904,15 +926,15 @@ def validate_epub(output: Path, ed: Edition, sections: list[Section]) -> None:
             n_id = len(set(re.findall(r"C\d\d-\d{3}", joined)))
             if n_id < 360:
                 raise ValueError(f"纪律总表只剩 {n_id} 个编号（应为 360），疑似转换丢失")
-        if ed.key in ("playbook", "system", "catalog", "quant"):
+        if ed.key in ("playbook", "system", "catalog", "quant", "mind"):
             for bad in ("150万", "1.5M", "traceme", "discovery-invest"):
                 if bad in joined:
                     raise ValueError(f"{ed.title}正文含不应出现的字符串「{bad}」")
             if re.search(r"<a href=\"/", joined):
                 raise ValueError(f"{ed.title}成书里残留站内链接")
-        if ed.key in ("playbook", "system", "catalog"):
+        if ed.key in ("playbook", "system", "catalog", "mind"):
             nq = joined.count("《道德经》第")
-            floor = {"playbook": 30, "system": 15, "catalog": 0}.get(ed.key, 15)
+            floor = {"playbook": 30, "system": 15, "catalog": 0, "mind": 20}.get(ed.key, 15)
             if nq < floor:
                 raise ValueError(f"{ed.title}的《道德经》引文只剩 {nq} 处（下限 {floor}），疑似转换丢失")
         if ed.key == "system":

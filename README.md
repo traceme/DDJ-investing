@@ -21,6 +21,7 @@
         ├─ 算法 ── 道德经投资打法手册 ── R1.1–R17.3 ── 怎么算：八个决策点的规则、算式、数字
         └─ 机器 ── 道德经投资系统 ── 宪N／S0–S4／P0–P8／R18 ── 今天允许做什么、违反了怎样、何时能改
               └─ 代码 ── 股票量化投资系统 ── 设计规格 v1.0 ── 让程序替人守纪律：数据、研究、仓位、订单、回测的合同
+ 人层 ── 成功投资者心性养成指南 ── 36 条练习 T1.1–T12.3 ── 让上面四层在冲动到来的九十秒里仍然有效的那个人，怎么练出来
 ```
 
 | 层 | 书 | 阅读 | EPUB | PDF | 规模 |
@@ -35,6 +36,7 @@
 | **算法** | **道德经投资打法手册** | [道德经投资打法手册.md](道德经投资打法手册.md) | [下载](https://traceme.github.io/DDJ-investing/道德经投资打法手册.epub) | [下载](https://traceme.github.io/DDJ-investing/道德经投资打法手册.pdf) | 17 章 ＋ 4 附录，54 条编号规则 |
 | **机器** | **道德经投资系统** | [道德经投资系统.md](道德经投资系统.md) | [下载](https://traceme.github.io/DDJ-investing/道德经投资系统.epub) | [下载](https://traceme.github.io/DDJ-investing/道德经投资系统.pdf) | 宪法十二条，360 行执行矩阵 |
 | **代码** | **股票量化投资系统** | [股票量化投资系统.md](股票量化投资系统.md) | [下载](https://traceme.github.io/DDJ-investing/股票量化投资系统.epub) | [下载](https://traceme.github.io/DDJ-investing/股票量化投资系统.pdf) | 设计规格 v1.0，十三章；程序、回测与模拟待实施 |
+| **人层** | **成功投资者心性养成指南** | [成功投资者心性养成指南.md](成功投资者心性养成指南.md) | [下载](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.epub) | [下载](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.pdf) | 十二章、36 条练习、一年训练日历 |
 
 每本都有 EPUB 与 PDF 两个版本、同一封面。PDF 为 A4 排版：宋体正文、黑体标题、页眉显示当前章节、页脚页码、带页码的目录与侧栏书签，表格跨页自动重复表头，适合打印或平板通读；EPUB 适合手机与阅读器重排。
 
@@ -53,6 +55,8 @@
 ⚖️ 法源与机器：[投资纪律总表](投资纪律总表.md)（[下载 EPUB](https://traceme.github.io/DDJ-investing/投资纪律总表.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/投资纪律总表.pdf)）——五部心法语料中的全部 360 条行为纪律（铁律／条件律／门槛／节律），逐条归并、2,526 处引文逐字核对来源、47 处语料分歧单列、数字口径总表；[道德经投资系统](道德经投资系统.md)（[下载 EPUB](https://traceme.github.io/DDJ-investing/道德经投资系统.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/道德经投资系统.pdf)）——坐在纪律总表与打法手册之上的第四层：宪法十二条（一页纸）、账户与仓位状态机（今天允许做什么）、权限引擎（仓位与开仓权限由过程分、兑现触发、腿验证、违规记点四本账挣来与扣掉）、49 处分歧逐条裁决、五级审计与三层修宪、九张系统表单、360 行执行矩阵（每条纪律的检查时点、检测器、后果与承载机制，脚本核对 360／360）。
 
 🤖 代码层：[股票量化投资系统](股票量化投资系统.md)（[下载 EPUB](https://traceme.github.io/DDJ-investing/股票量化投资系统.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/股票量化投资系统.pdf)）——把上面三层交给程序执行的设计规格：只能用当时已知的事实（时点数据与修订契约、缺失即 UNKNOWN）、先辨认好生意再算好价格（资格门、三情景估值与安全边际、行业模板）、上限不是必须买满的目标（组合约束口径、分批与持有带）、意图先落账再调券商（订单去重、交易边界、运行节律）、回测不把故事写成神话（公平比较、最小测试矩阵、上线门槛），末尾走一笔虚构交易的完整路径。**它是设计交付，不是已运行的程序：回测、模拟与实盘各自另过验收与授权门。**
+
+🪷 人层：[成功投资者心性养成指南](成功投资者心性养成指南.md)（[下载 EPUB](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.pdf)）——写给还在满仓梭哈、多次亏完本金、总觉得复利太慢的读者：把《道德经》提倡的心性（知止、知足、守静、不争、慎终如始、自胜者强）换算成 36 条可计数的练习，按日历排成一年——停手 30 天装好两户结构与转出延迟，复训 90 天练熟冲动来时的五个动作（命名、离屏、四个数、四分之一、隔夜），规则实盘六个月跑复发协议与顺境协议，每月一张没有收益率的心性记分卡。全部数字取自算术底稿（翻倍年数、亏损不对称、波动拖累、连续梭哈存活率、十年路径对照），心理学只引带样本范围的白名单文献，语料引文逐字核对，案例账户逐月走完一年（含一次失足、一次复发）。**它不是治疗，也不承诺收益：一年后账户不翻身、本金不归零、记录完整。**
 
 📚 姊妹辑：[第三只眼观 · 投资心法](thethirdeye/README.md)（[下载 EPUB](https://traceme.github.io/DDJ-investing/第三只眼观投资心法.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/第三只眼观投资心法.pdf)）——《第三只眼观》151篇文章的逐篇读书笔记（中心思想＋投资随笔），体例与本书一致。
 
@@ -161,8 +165,9 @@ python3 scripts/build_jinbing_epub.py        # 渡人渡己读书心法（本地
 python3 system/render_catalog.py --render    # 纪律总表：2,526 处引文逐字核对回语料 → 渲染 .md
 python3 system/assemble_system.py && python3 system/validate_system.py   # 投资系统：装配 → 校验
 python3 playbook/assemble_book.py && python3 playbook/validate_book.py   # 打法手册：装配 → 校验
-python3 scripts/build_system_epub.py         # 规则层三本 + 量化系统 EPUB（可加 playbook / catalog / system / quant 只建一本）
-python3 scripts/build_pdf.py                 # 九本 PDF（Chrome 排版 + PyMuPDF 装订；需 Chrome、PyMuPDF、fontTools；可加书名键只建几本）
+python3 mindset/assemble_book.py && python3 mindset/validate_book.py   # 心性指南：装配 → 校验（道德经与语料引文逐字、练习编号、文献白名单）
+python3 scripts/build_system_epub.py         # 规则层三本 + 量化系统 + 心性指南 EPUB（可加 playbook / catalog / system / quant / mind 只建一本）
+python3 scripts/build_pdf.py                 # 十本 PDF（Chrome 排版 + PyMuPDF 装订；需 Chrome、PyMuPDF、fontTools；可加书名键只建几本）
 ```
 
 校验器断言的事：纪律总表的每处引文逐字出现在所标篇章；投资系统引用的每个纪律编号存在、每条规则已注册、执行矩阵的编号集合与纪律总表完全相等、《道德经》引文逐字、记点级别与宪法一致；打法手册的每句《道德经》引文逐字、每个 R 编号已注册；三本都不含真实账户数字（案例账户归一为 100 单位）。

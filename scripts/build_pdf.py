@@ -165,6 +165,7 @@ E = B.EDITIONS
 
 
 QUANT_META = "设计规格：程序、回测与模拟交易尚未实施，不可据此启用实盘；不构成任何具体投资建议"
+MIND_META = "训练手册，不是荐股，也不是医疗建议；示例数字来自归一为 100 单位的案例账户"
 
 
 def rules_book(key: str, out: str, probes: tuple, meta: str = RULES_META) -> Book:
@@ -180,6 +181,8 @@ BOOKS: dict[str, Book] = {
     "system": rules_book("system", "道德经投资系统.pdf", ("宪十二", "C01-001", "R18.20")),
     "quant": rules_book("quant", "股票量化投资系统.pdf",
                         ("设计规格 v1.0", "十三、实施交付", "legacy_playbook", "第48章"), QUANT_META),
+    "mind": rules_book("mind", "成功投资者心性养成指南.pdf",
+                       ("卷首", "案例账户", "附录 A", "T1.1"), MIND_META),
     "ddj": Book("ddj", "道德经81章投资心法", "八十一章 · 逐章投资随笔", "以 王 弼 通 行 本 为 底 本",
                 "把章句引申为投资世界里的常识与纪律", ESSAY_META, ROOT / "道德经81章投资心法.pdf",
                 chapter_files("chapters/第*章.md"), cover_from_epub(ROOT / "道德经81章投资心法.epub"),
