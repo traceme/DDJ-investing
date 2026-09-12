@@ -25,6 +25,7 @@
               └─ 代码 ── 股票量化投资系统 ── 设计规格 v1.0 ── 让程序替人守纪律：数据、研究、仓位、订单、回测的合同
  人层 ── 成功投资者心性养成指南 ── 36 条练习 T1.1–T12.3 ── 让上面四层在冲动到来的九十秒里仍然有效的那个人，怎么练出来
  军规 ── 投资三十二条军规 ── 全项目纪律的综合提炼 ── 八组、三十二条、四步操作与五张操作卡
+ 指南 ── 普通投资者的努力方向与时间分配 ／ 专业投资研究指南 ── 时间花在哪里、研究如何形成可复核的判断
 ```
 
 | 层 | 书 | 阅读 | EPUB | PDF | 规模 |
@@ -41,12 +42,18 @@
 | **代码** | **股票量化投资系统** | [股票量化投资系统.md](股票量化投资系统.md) | [下载](https://traceme.github.io/DDJ-investing/股票量化投资系统.epub) | [下载](https://traceme.github.io/DDJ-investing/股票量化投资系统.pdf) | 设计规格 v1.0，十三章；程序、回测与模拟待实施 |
 | **人层** | **成功投资者心性养成指南** | [成功投资者心性养成指南.md](成功投资者心性养成指南.md) | [下载](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.epub) | [下载](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.pdf) | 十二章、36 条练习、一年训练日历 |
 | **军规** | **投资三十二条军规** | [在线阅读](https://traceme.github.io/DDJ-investing/#/投资三十二条军规) | [下载](https://traceme.github.io/DDJ-investing/投资三十二条军规.epub) | [下载](https://traceme.github.io/DDJ-investing/投资三十二条军规.pdf) | 32 条、PDF 55 页；逐条操作指南、虚构案例、五张操作卡 |
+| **指南** | **普通投资者的努力方向与时间分配** | [在线阅读](https://traceme.github.io/DDJ-investing/#/普通投资者的努力方向与时间分配) | — | [下载](https://traceme.github.io/DDJ-investing/普通投资者的努力方向与时间分配.pdf) | 九章，PDF 11 页；努力方向、两种路线的时间安排与每周四小时研究示例 |
+| **指南** | **专业投资研究指南** | [在线阅读](https://traceme.github.io/DDJ-investing/#/专业投资研究指南) | — | [下载](https://traceme.github.io/DDJ-investing/专业投资研究指南.pdf) | 七章，PDF 9 页；九个研究维度、三个决策层次与研究验收标准 |
 
-每本都有 EPUB 与 PDF 两个版本、同一封面。PDF 为 A4 排版：宋体正文、黑体标题、页眉显示当前章节、页脚页码、带页码的目录与侧栏书签，表格跨页自动重复表头，适合打印或平板通读；EPUB 适合手机与阅读器重排。
+各册可用格式见上表；同时提供 EPUB 与 PDF 的版本共用封面。PDF 为 A4 排版：宋体正文、黑体标题、页眉显示当前章节、页脚页码、带页码的目录与侧栏书签，表格跨页自动重复表头，适合打印或平板通读；EPUB 适合手机与阅读器重排。
 
 **怎么读。** 只想读随笔：从下面的[目录](#目录)任选一章。想先掌握全项目的纪律：[《投资三十二条军规》](https://traceme.github.io/DDJ-investing/#/投资三十二条军规)给出八组原则、逐条操作指南与五张操作卡。需要更细的参数和执行机制，再读《道德经投资系统》与《打法手册》；《纪律总表》被引用时按编号查。
 
 ## 各册简介
+
+⏳ 时间与精力：[普通投资者的努力方向与时间分配](https://traceme.github.io/DDJ-investing/#/普通投资者的努力方向与时间分配)（[下载 PDF](https://traceme.github.io/DDJ-investing/普通投资者的努力方向与时间分配.pdf)）——面向有工作、家庭与生活目标的非职业投资者，九章梳理努力的先后顺序、两种投资路线的时间安排、信息取舍、复盘与 AI 使用边界。附每周四小时研究分配表和本周可以开始的三件事；时间比例属于可调整的编者示例。
+
+🔎 研究方法：[专业投资研究指南](https://traceme.github.io/DDJ-investing/#/专业投资研究指南)（[下载 PDF](https://traceme.github.io/DDJ-investing/专业投资研究指南.pdf)）——七章说明投资研究需要解决的问题，以九个维度组织商业、财务、估值、风险与组合判断，区分筛选、公司研究、组合研究三个层次，给出证据、假设、反证与交付成果的验收标准。面向美股、低频、长期、只做多的研究方法，文中 QQQ 用作比较基准。
 
 📜 纪律浓缩：[投资三十二条军规](https://traceme.github.io/DDJ-investing/#/投资三十二条军规)（[下载 EPUB](https://traceme.github.io/DDJ-investing/投资三十二条军规.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/投资三十二条军规.pdf)）——将360条纪律归并为八组三十二条，每条有判断原则、四步操作、触发处置与百字以内建议。附一笔虚构交易的完整演练、五张可复制操作卡和360条来源索引，并吸收执行规则、心性训练与量化设计的边界说明。原参数与本书取舍分开标注。
 
@@ -174,7 +181,8 @@ python3 playbook/assemble_book.py && python3 playbook/validate_book.py   # 打�
 python3 mindset/assemble_book.py && python3 mindset/validate_book.py   # 心性指南：装配 → 校验（道德经与语料引文逐字、练习编号、文献白名单）
 python3 rules32/assemble_book.py && python3 rules32/validate_book.py   # 三十二条军规：装配、来源归并与正文校验
 python3 scripts/build_system_epub.py         # 已登记 EPUB；加 rules32 只建三十二条军规
-python3 scripts/build_pdf.py                 # 十一本 PDF；加 rules32 只建三十二条军规（需 Chrome、PyMuPDF、fontTools）
+python3 scripts/build_pdf.py                 # 十三本 PDF（需 Chrome、PyMuPDF、fontTools）
+python3 scripts/build_pdf.py effort research # 只建两本投资指南；自动核对全文与章节书签
 python3 rules32/validate_book.py --artifacts # 军规 EPUB / PDF 全文、编号、目录与案例算术核验
 ```
 

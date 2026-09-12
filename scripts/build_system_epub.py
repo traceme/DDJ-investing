@@ -46,6 +46,7 @@ class Edition:
     split_h3: tuple = ()      # ((H2 前缀, 页面短前缀), …)：该 H2 之下的 H3 各自成页
     intro_title: str = ""     # 非空＝首个 H2 之前的引言（H1 除外）自成一页，以此为页题
     publication_date: str = BOOK_DATE
+    cover_title_lines: tuple[str, ...] = ()  # 可选的长书名分行；元数据仍使用完整 title
 
 
 EDITIONS = {
@@ -665,13 +666,18 @@ def build_cover(path: Path, ed: Edition) -> None:
                          width=6 if k == 0 else 3)
         draw.ellipse((cx - 16, cy - 16, cx + 16, cy + 16), fill=gold)
         draw.line((cx - 250, cy + 300, cx + 250, cy + 300), fill=pale_gold, width=3)
+    title_lines = ed.cover_title_lines or (ed.title,)
     size = 150
-    while size > 90 and draw.textlength(ed.title, font=get_font(size)) > 1380:
+    while size > 90 and max(draw.textlength(line, font=get_font(size)) for line in title_lines) > 1380:
         size -= 10
-    centered_text(draw, 1060 + (150 - size) // 2, ed.title, get_font(size), ink)
-    centered_text(draw, 1265, ed.subtitle, get_font(76), green, spacing=6)
-    draw.line((520, 1420, 1080, 1420), fill=pale_gold, width=3)
-    centered_text(draw, 1480, ed.cover_caption, get_font(46), (101, 90, 70))
+    multiline = len(title_lines) > 1
+    title_y = 960 if multiline else 1060 + (150 - size) // 2
+    for i, line in enumerate(title_lines):
+        centered_text(draw, title_y + i * (size + 35), line, get_font(size), ink)
+    offset = 125 if multiline else 0
+    centered_text(draw, 1265 + offset, ed.subtitle, get_font(76), green, spacing=6)
+    draw.line((520, 1420 + offset, 1080, 1420 + offset), fill=pale_gold, width=3)
+    centered_text(draw, 1480 + offset, ed.cover_caption, get_font(46), (101, 90, 70))
     centered_text(draw, 2140, "渡人渡己 · 道德经投资心法项目", get_font(40), gold, spacing=4)
 
     path.parent.mkdir(parents=True, exist_ok=True)

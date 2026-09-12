@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
-"""把本仓库的电子书做成阅读友好的 A4 PDF（与各自 EPUB 同名、同封面）。
+"""把本仓库的 Markdown 书稿做成阅读友好的 A4 PDF。
 
-八本：
+主要书目：
   规则层三本   playbook 道德经投资打法手册 ／ catalog 投资纪律总表 ／ system 道德经投资系统
   心法层五本   ddj 道德经81章投资心法 ／ codex Codex 重悟版 ／ selection 投资心法100条精选
                jinbing 渡人渡己读书心法 ／ thirdeye 第三只眼观投资心法
+  指南两本     effort 普通投资者的努力方向与时间分配 ／ research 专业投资研究指南
 
 分工：
 - Chrome headless 负责排版（宋体正文／黑体标题、表格跨页自动重复表头、行不跨页、
   标题不孤行），并用 --generate-pdf-document-outline 生成带页码的书签；
   标题用 Hiragino Sans GB 而非 PingFang：后者会被 Chrome 逐页以 Type 3 字形嵌入，体积膨胀十倍。
-- PyMuPDF 负责装订：封面页（取自同名 EPUB）、扉页与目录（目录页码来自 Chrome 书签）、每页页眉
+- PyMuPDF 负责装订：封面页（复用 EPUB 封面或系列封面模板）、扉页与目录（目录页码来自 Chrome 书签）、每页页眉
   （左书名、右当前章节）与页脚页码、PDF 页码标签（前言罗马数字、正文阿拉伯数字）、字体子集合并。
   盖章前每页先 wrap_contents()：Chrome 的内容流不闭合坐标变换，否则追加的文字会被压扁挪位。
   Chrome 在 macOS 上打印完常不退出，脚本在输出文件停止增长后结束进程。
@@ -22,6 +23,7 @@
     python3 scripts/build_pdf.py                 # 所有已登记书目
     python3 scripts/build_pdf.py catalog ddj     # 只构建指定的几本
     python3 scripts/build_pdf.py rules32         # 《投资三十二条军规》
+    python3 scripts/build_pdf.py effort research # 两本投资指南
 
 依赖：Google Chrome、PyMuPDF (fitz)、fontTools、Pillow（规则层封面）。
 """
@@ -75,6 +77,8 @@ class Book:
     cover: Callable[[Path], None]               # 把封面 PNG 写到给定路径
     probes: tuple = ()                          # 自检：成书正文必含
     rich_marks: bool = False                    # 还原 <mark>/<u>（心法随笔用）
+    source: Path | None = None                  # 单文件指南：逐行核验原稿与成书、核对全部标题书签
+    title_lines: tuple[str, ...] = ()           # 长书名在封面及扉页的自然分行
 
 
 def demote(lines: list[str]) -> list[str]:
@@ -176,6 +180,19 @@ def rules_book(key: str, out: str, probes: tuple, meta: str = RULES_META) -> Boo
                 cover_from_edition(ed), probes)
 
 
+def guide_book(key: str, title: str, subtitle: str, eyebrow: str, caption: str,
+               motif: str, probes: tuple, title_lines: tuple[str, ...] = ()) -> Book:
+    """仅登记 PDF 的单文件指南；复用系列封面，不依赖预先生成的 EPUB。"""
+    source, output = ROOT / f"{title}.md", ROOT / f"{title}.pdf"
+    cover = B.Edition(key=key, source=source, output=output, title=title, subtitle=subtitle,
+                      book_id=f"ddj-investing-{key}", eyebrow=eyebrow,
+                      cover_motif=motif, cover_caption=caption, cover_title_lines=title_lines)
+    return Book(key, title, subtitle, eyebrow, caption,
+                "投资方法说明，不构成具体证券买卖建议，也不保证收益或最大回撤",
+                output, single_file(source), cover_from_edition(cover), probes,
+                source=source, title_lines=title_lines)
+
+
 BOOKS: dict[str, Book] = {
     "playbook": rules_book("playbook", "道德经投资打法手册.pdf", ("R4.6", "案例账户", "附录 B")),
     "catalog": rules_book("catalog", "投资纪律总表.pdf", ("C01-001", "C18-022", "铁律")),
@@ -187,6 +204,13 @@ BOOKS: dict[str, Book] = {
     "rules32": rules_book("rules32", "投资三十二条军规.pdf",
                           ("第01条", "第32条", "附录A", "C01-001", "C18-022", "0.6575"),
                           "三十二条操作军规；虚构案例归一为100单位，示例参数不构成具体投资建议"),
+    "effort": guide_book("effort", "普通投资者的努力方向与时间分配", "让时间服务于长期目标",
+                         "职 业 · 资 金 · 学 习 · 研 究", "把有限注意力用在真正影响长期结果的事情上",
+                         "ripple", ("合计 240 分钟", "66,465", "为学日益", "只解决一个重要问题"),
+                         title_lines=("普通投资者的", "努力方向与时间分配")),
+    "research": guide_book("research", "专业投资研究指南", "证据 · 估值 · 风险 · 组合",
+                           "从 公 司 筛 选 到 可 复 核 的 决 策", "九个研究维度，三个决策层次，一份可复核结论",
+                           "three", ("真正需要研究的九件事", "55 单位", "关键假设", "QQQ")),
     "ddj": Book("ddj", "道德经81章投资心法", "八十一章 · 逐章投资随笔", "以 王 弼 通 行 本 为 底 本",
                 "把章句引申为投资世界里的常识与纪律", ESSAY_META, ROOT / "道德经81章投资心法.pdf",
                 chapter_files("chapters/第*章.md"), cover_from_epub(ROOT / "道德经81章投资心法.epub"),
@@ -372,6 +396,20 @@ def restore_marks(doc: str) -> str:
 
 def body_html(book: Book, sections: list[B.Section]) -> str:
     head = html_head(book.title)
+    if book.source:
+        extra = """<style>
+body.guide { line-height: 1.75; }
+.guide section.chapter { break-before: auto; page-break-before: auto; }
+.guide section.chapter + section.chapter { margin-top: 1.4em; }
+.guide section.chapter:last-child { break-inside: avoid; page-break-inside: avoid; }
+.guide h1 { font-size: 18pt; margin-bottom: 0.65em; }
+.guide h2 { font-size: 13pt; margin: 0.9em 0 0.4em; }
+.guide p { margin-bottom: 0.5em; }
+.guide ul, .guide ol { margin-bottom: 0.6em; }
+.guide li { margin: 0.1em 0; }
+.guide .tablewrap { break-inside: avoid; page-break-inside: avoid; }
+</style>"""
+        head = head.replace("</head><body>", extra + '</head><body class="guide">')
     if book.key == "rules32":
         extra = """<style>
 body.rules32 { line-height: 1.8; }
@@ -402,6 +440,7 @@ body.rules32 { line-height: 1.8; }
 
 
 def front_html(book: Book, toc: list[tuple[str, int, bool]], today: str) -> str:
+    title = "<br/>".join(html.escape(line) for line in book.title_lines) if book.title_lines else html.escape(book.title)
     items = "".join(
         f'<li class="{"part" if is_part else ""}"><span class="t">{html.escape(t)}</span>'
         f'<span class="d"></span><span class="n">{p}</span></li>'
@@ -410,7 +449,7 @@ def front_html(book: Book, toc: list[tuple[str, int, bool]], today: str) -> str:
     dense = " dense" if len(toc) > 40 else ""
     return (html_head(book.title) +
             f'<section class="title"><div class="eyebrow">{html.escape(book.eyebrow)}</div>'
-            f'<h1>{html.escape(book.title)}</h1><div class="sub">{html.escape(book.subtitle)}</div>'
+            f'<h1>{title}</h1><div class="sub">{html.escape(book.subtitle)}</div>'
             f'<div class="cap">{html.escape(book.caption)}</div>'
             f'<div class="meta">渡人渡己 · 道德经投资心法项目<br/>PDF 版　{today}　由仓库脚本从 Markdown 生成<br/>'
             f'{html.escape(book.meta)}</div></section>'
@@ -463,6 +502,40 @@ def stamp(doc: fitz.Document, first_body: int, chapter_of_page: dict[int, str],
         tw2.write_text(page, color=INK)
 
 
+def check_source_pdf(source: Path, doc: fitz.Document) -> None:
+    """直接从原始 Markdown 提取文字核对，独立于 HTML 转换器。"""
+    def compact(text: str) -> str:
+        return re.sub(r"\s+", "", text)
+
+    markdown = source.read_text(encoding="utf-8")
+    content = compact("".join(page.get_text(clip=fitz.Rect(0, 55, page.rect.width, page.rect.height - 50))
+                              for page in doc))
+    missing = []
+    for line in markdown.splitlines():
+        if not line.strip() or re.fullmatch(r"[| :\-]+", line):
+            continue
+        line = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", line)
+        line = re.sub(r"^#{1,6}\s+|^>\s*|^\d+\.\s+|^-\s+", "", line)
+        line = compact(html.unescape(line.replace("**", "").replace(chr(96), "").replace("|", "")))
+        if line and line not in content:
+            missing.append(line[:90])
+    if missing:
+        raise RuntimeError(f"{source.name}: PDF 丢失正文：{missing[:5]}")
+    headings = re.findall(r"^#{2,6} (.+)$", markdown, re.M)
+    outline = doc.get_toc()
+    actual = [t for _, t, _ in outline if t not in ("封面", "目录", "卷首")]
+    if actual != headings:
+        raise RuntimeError(f"{source.name}: PDF 书签与原稿标题不一致")
+    for _, title, page in outline:
+        if title != "封面" and compact(title) not in compact(doc[page - 1].get_text()):
+            raise RuntimeError(f"{source.name}: 书签错页：{title}")
+    expected_links = set(re.findall(r"\[[^\]]+\]\((https?://[^)]+)\)", markdown))
+    pdf_links = {link["uri"] for page in doc for link in page.get_links() if link.get("uri")}
+    if expected_links - pdf_links:
+        raise RuntimeError(f"{source.name}: PDF 丢失外部引用链接：{expected_links - pdf_links}")
+    print(f"   全文逐行保留，{len(headings)} 个原稿标题及目录书签定位正确，{len(expected_links)} 个外部引用链接保留")
+
+
 def build(book: Book) -> None:
     sections = book.sections()
     if not sections:
@@ -491,11 +564,27 @@ def build(book: Book) -> None:
         font = fitz.Font(fontfile=str(extract_songti(tmp)))
         chapter_of_page: dict[int, str] = {}
         cur, bounds = "", {p - 1: t for t, p in starts}
+        guide_starts: dict[int, list[str]] = {}
+        for title, page in starts:
+            guide_starts.setdefault(page - 1, []).append(title)
         for i in range(body.page_count):
+            if book.source:
+                # 连续排版时，同页可能开始多章；页眉标注页首正在阅读的章节。
+                here = guide_starts.get(i, [])
+                header = cur
+                if here:
+                    hits = body[i].search_for(here[0])
+                    if not cur or (hits and hits[0].y0 < 105):
+                        header = here[0]
+                    cur = here[-1]
+                chapter_of_page[first_body + i] = header
+                continue
             cur = bounds.get(i, cur)
             chapter_of_page[first_body + i] = cur
         stamp(doc, first_body, chapter_of_page, book.title, font)
-        doc.set_toc([[1, "封面", 1], [1, "目录", 2]] + [[lvl, t, p + first_body] for lvl, t, p in outline])
+        toc_page = next(p for lvl, title, p in front.get_toc() if lvl == 1 and title == "目录")
+        doc.set_toc([[1, "封面", 1], [1, "目录", toc_page + 1]] +
+                    [[lvl, t, p + first_body] for lvl, t, p in outline])
         doc.set_page_labels([{"startpage": 0, "prefix": "", "style": "r", "firstpagenum": 1},
                              {"startpage": first_body, "prefix": "", "style": "D", "firstpagenum": 1}])
         doc.set_metadata({"title": book.title, "author": "渡人渡己 · 道德经投资心法项目", "subject": book.subtitle,
@@ -513,6 +602,8 @@ def build(book: Book) -> None:
     for bad in ("<!--", "&lt;mark", "&lt;u&gt;", "返回总目录", "下一章 →", "下一篇 →"):
         if bad in text_all:
             raise RuntimeError(f"{book.key}: 成书含不应出现的「{bad}」")
+    if book.source:
+        check_source_pdf(book.source, check)
     print(f"✅ {book.out.name}：{book.out.stat().st_size:,} 字节｜{check.page_count} 页"
           f"（封面 1 + 前言 {n_front} + 正文 {n_body}）｜{len(sections)} 章｜书签 {len(check.get_toc())} 条｜自检通过")
     check.close()

@@ -105,6 +105,10 @@
 - **人层**
   - [🪷 成功投资者心性养成指南（36 条练习）](成功投资者心性养成指南.md)　[EPUB](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.epub)　[PDF](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.pdf)
 
+- **投资指南**
+  - [⏳ 普通投资者的努力方向与时间分配](/普通投资者的努力方向与时间分配.md)　[PDF](https://traceme.github.io/DDJ-investing/普通投资者的努力方向与时间分配.pdf)
+  - [🔎 专业投资研究指南](/专业投资研究指南.md)　[PDF](https://traceme.github.io/DDJ-investing/专业投资研究指南.pdf)
+
 - **三书提炼**
   - [💎 投资心法 100 条精选](投资心法100条精选版.md)　[PDF](https://traceme.github.io/DDJ-investing/投资心法100条精选版.pdf)
   - [投资心法 313 条全量](投资心法313条全量版.md)
