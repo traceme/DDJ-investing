@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
-"""Build the three rule-layer books as self-contained EPUB 3 files:
-《道德经投资打法手册》(playbook)、《投资纪律总表》(catalog)、《道德经投资系统》(system).
+"""Build the single-file books as self-contained EPUB 3 files.
 
-与 build_codex/selection/jinbing 三个构建器不同，这三本的正文是通用 Markdown
+与 build_codex/selection/jinbing 三个构建器不同，这些书的正文是通用 Markdown
 （含表格、ASCII 表单代码块、勾选清单、多级标题），因此这里带一个小而完整的
 Markdown → XHTML 转换器，而不是针对固定条目结构的解析器。
 
 用法：
-    python3 scripts/build_system_epub.py            # 三本都构建
-    python3 scripts/build_system_epub.py catalog    # 只构建其中一本（playbook / catalog / system）
+    python3 scripts/build_system_epub.py            # 所有已登记版本
+    python3 scripts/build_system_epub.py rules32    # 只构建《投资三十二条军规》
 
 EPUB 样式约束：表格与 <pre> 不得使用 overflow——带 overflow 的盒子在分页阅读器里是
 不可分割的整体，超过一屏的内容会整段渲染成空白页。
@@ -46,6 +45,7 @@ class Edition:
     cover_caption: str
     split_h3: tuple = ()      # ((H2 前缀, 页面短前缀), …)：该 H2 之下的 H3 各自成页
     intro_title: str = ""     # 非空＝首个 H2 之前的引言（H1 除外）自成一页，以此为页题
+    publication_date: str = BOOK_DATE
 
 
 EDITIONS = {
@@ -105,6 +105,18 @@ EDITIONS = {
         eyebrow="自 胜 者 强 · 一 年 训 练 手 册",
         cover_motif="ripple",
         cover_caption="把《道德经》的心性换算成可计数的日常练习",
+    ),
+    "rules32": Edition(
+        key="rules32",
+        source=ROOT / "投资三十二条军规.md",
+        output=ROOT / "投资三十二条军规.epub",
+        title="投资三十二条军规",
+        subtitle="守住本金 · 管好下注 · 长久执行",
+        book_id="ddj-investing-rules32",
+        eyebrow="三 百 六 十 条 纪 律 · 凝 为 三 十 二 条",
+        cover_motif="thirtytwo",
+        cover_caption="每条有判断标准，每条有操作指南",
+        publication_date="2026-09-12",
     ),
 }
 
@@ -525,7 +537,7 @@ def content_opf(ed: Edition, sections: list[Section], modified: str) -> str:
         f'    <dc:identifier id="pub-id">urn:uuid:{ed.book_id}</dc:identifier>\n'
         f"    <dc:title>{esc(ed.title)}·{esc(ed.subtitle)}</dc:title>\n"
         f"    <dc:language>{LANGUAGE}</dc:language>\n"
-        f"    <dc:date>{BOOK_DATE}</dc:date>\n"
+        f"    <dc:date>{ed.publication_date}</dc:date>\n"
         "    <dc:creator>渡人渡己 · 道德经投资心法项目</dc:creator>\n"
         f"    <dc:description>{esc(ed.cover_caption)}</dc:description>\n"
         f'    <meta property="dcterms:modified">{modified}</meta>\n'
@@ -636,6 +648,16 @@ def build_cover(path: Path, ed: Edition) -> None:
             draw.ellipse((x - r, y - r, x + r, y + r), fill=gold if k == 0 else background, outline=gold, width=4)
         draw.line((cx - 250, cy + 95, cx + 250, cy + 95), fill=pale_gold, width=3)
         draw.ellipse((cx - 16, cy - 16 + 30, cx + 16, cy + 16 + 30), fill=gold)
+    elif ed.cover_motif == "thirtytwo":
+        # 八行四枚令牌，对应八组、每组四条，与本系列几何封面同源。
+        for row in range(8):
+            for col in range(4):
+                x = cx - 208 + col * 112
+                y = cy - 245 + row * 65
+                draw.rounded_rectangle((x, y, x + 80, y + 43), radius=4,
+                                       outline=green if col == 0 else gold, width=3)
+                draw.line((x + 20, y + 21, x + 60, y + 21),
+                          fill=gold if col == 0 else pale_gold, width=3)
     elif ed.cover_motif == "ripple":
         # 守静：一枚石子落进静水，涟漪一圈圈散开——冲动会来，也会退
         for k, r in enumerate((250, 190, 130, 72)):
@@ -918,6 +940,7 @@ def validate_epub(output: Path, ed: Edition, sections: list[Section]) -> None:
             "catalog": ("附录 A", "第一部分", "第五部分", "C01-001", "C18-022", "铁律"),
             "quant": ("卷首", "设计规格 v1.0", "十三、实施交付", "legacy_playbook", "第48章", "MOS"),
             "mind": ("卷首", "第一章", "附录 A", "免责声明", "案例账户", "《道德经》第", "T1.1"),
+            "rules32": ("第01条", "第32条", "附录A", "C01-001", "C18-022", "操作指南", "案例账户"),
         }.get(ed.key, ("附录A", "免责声明", "第十二章"))
         for probe in probes:
             if probe not in joined:
@@ -926,7 +949,14 @@ def validate_epub(output: Path, ed: Edition, sections: list[Section]) -> None:
             n_id = len(set(re.findall(r"C\d\d-\d{3}", joined)))
             if n_id < 360:
                 raise ValueError(f"纪律总表只剩 {n_id} 个编号（应为 360），疑似转换丢失")
-        if ed.key in ("playbook", "system", "catalog", "quant", "mind"):
+        if ed.key == "rules32":
+            import json
+            catalog = json.loads((ROOT / "system/data/纪律总表.json").read_text(encoding="utf-8"))
+            if set(re.findall(r"C\d{2}-\d{3}", joined)) != {d["id"] for d in catalog}:
+                raise ValueError("三十二条军规的360条来源编号有遗漏或多余")
+            if sum(bool(re.match(r"第\d{2}条 · ", s.title)) for s in sections) != 32:
+                raise ValueError("三十二条军规的正文条目数量错误")
+        if ed.key in ("playbook", "system", "catalog", "quant", "mind", "rules32"):
             for bad in ("150万", "1.5M", "traceme", "discovery-invest"):
                 if bad in joined:
                     raise ValueError(f"{ed.title}正文含不应出现的字符串「{bad}」")

@@ -97,6 +97,7 @@
   - [🗺️ 道德经投资打法手册（八个决策点）](道德经投资打法手册.md)　[EPUB](https://traceme.github.io/DDJ-investing/道德经投资打法手册.epub)　[PDF](https://traceme.github.io/DDJ-investing/道德经投资打法手册.pdf)
 
 - **法源与机器**
+  - [📜 投资三十二条军规（浓缩与操作指南）](/投资三十二条军规.md)　[EPUB](https://traceme.github.io/DDJ-investing/投资三十二条军规.epub)　[PDF](https://traceme.github.io/DDJ-investing/投资三十二条军规.pdf)
   - [⚖️ 投资纪律总表（360 条）](投资纪律总表.md)　[EPUB](https://traceme.github.io/DDJ-investing/投资纪律总表.epub)　[PDF](https://traceme.github.io/DDJ-investing/投资纪律总表.pdf)
   - [⚙️ 道德经投资系统（宪法·状态机·权限）](道德经投资系统.md)　[EPUB](https://traceme.github.io/DDJ-investing/道德经投资系统.epub)　[PDF](https://traceme.github.io/DDJ-investing/道德经投资系统.pdf)
   - [🤖 股票量化投资系统（设计规格）](股票量化投资系统.md)　[EPUB](https://traceme.github.io/DDJ-investing/股票量化投资系统.epub)　[PDF](https://traceme.github.io/DDJ-investing/股票量化投资系统.pdf)

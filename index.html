@@ -99,7 +99,40 @@
         nextText: '下一章',
         crossChapter: true,
         crossChapterText: true
-      }
+      },
+      plugins: [
+        function (hook, vm) {
+          // pagination@2 会把侧栏中的 EPUB/PDF 也当成章节；按阅读路由纠正相邻页。
+          hook.doneEach(function () {
+            function route(href) {
+              return decodeURIComponent(href.split('?')[0]).replace(/\/README$/i, '/')
+            }
+            var links = Array.prototype.filter.call(document.querySelectorAll('.sidebar-nav li a'), function (a) {
+              return a.getAttribute('href').indexOf('#/') === 0 && !a.classList.contains('section-link')
+            })
+            var current = route(vm.router.toURL(vm.route.path))
+            var index = links.findIndex(function (a) { return route(a.getAttribute('href')) === current })
+            if (index < 0) return
+            ;[['previous', index - 1], ['next', index + 1]].forEach(function (item) {
+              var box = document.querySelector('.docsify-pagination-container .pagination-item--' + item[0])
+              if (!box) return
+              var page = links[item[1]]
+              if (!page) {
+                box.remove()
+                return
+              }
+              var anchor = box.querySelector('a')
+              anchor.setAttribute('href', page.getAttribute('href'))
+              anchor.removeAttribute('target')
+              box.querySelector('.pagination-item-title').textContent = page.textContent
+              var group = page.closest('.sidebar-nav > ul > li')
+              var label = group && group.querySelector('p')
+              var subtitle = box.querySelector('.pagination-item-subtitle')
+              if (subtitle) subtitle.textContent = label ? label.textContent : ''
+            })
+          })
+        }
+      ]
     }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>

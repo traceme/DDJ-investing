@@ -19,8 +19,9 @@
 临时目录（PyMuPDF 不能直接用 TTC），随后以子集嵌入 PDF；仓库不含任何字体文件。
 
 用法：
-    python3 scripts/build_pdf.py                 # 八本都构建
+    python3 scripts/build_pdf.py                 # 所有已登记书目
     python3 scripts/build_pdf.py catalog ddj     # 只构建指定的几本
+    python3 scripts/build_pdf.py rules32         # 《投资三十二条军规》
 
 依赖：Google Chrome、PyMuPDF (fitz)、fontTools、Pillow（规则层封面）。
 """
@@ -183,6 +184,9 @@ BOOKS: dict[str, Book] = {
                         ("设计规格 v1.0", "十三、实施交付", "legacy_playbook", "第48章"), QUANT_META),
     "mind": rules_book("mind", "成功投资者心性养成指南.pdf",
                        ("卷首", "案例账户", "附录 A", "T1.1"), MIND_META),
+    "rules32": rules_book("rules32", "投资三十二条军规.pdf",
+                          ("第01条", "第32条", "附录A", "C01-001", "C18-022", "0.6575"),
+                          "三十二条操作军规；虚构案例归一为100单位，示例参数不构成具体投资建议"),
     "ddj": Book("ddj", "道德经81章投资心法", "八十一章 · 逐章投资随笔", "以 王 弼 通 行 本 为 底 本",
                 "把章句引申为投资世界里的常识与纪律", ESSAY_META, ROOT / "道德经81章投资心法.pdf",
                 chapter_files("chapters/第*章.md"), cover_from_epub(ROOT / "道德经81章投资心法.epub"),
@@ -367,10 +371,31 @@ def restore_marks(doc: str) -> str:
 
 
 def body_html(book: Book, sections: list[B.Section]) -> str:
-    parts = [html_head(book.title)]
+    head = html_head(book.title)
+    if book.key == "rules32":
+        extra = """<style>
+body.rules32 { line-height: 1.8; }
+.rules32 h1 { margin-bottom: 0.65em; }
+.rules32 h2 { font-size: 13pt; margin: 0.85em 0 0.4em; }
+.rules32 p { margin-bottom: 0.5em; }
+.rules32 ul, .rules32 ol { margin-bottom: 0.6em; }
+.rules32 li { margin: 0.1em 0; }
+.rules32 .source-note { font-size: 8.5pt; color: #76694f; line-height: 1.6; margin-top: 0.8em; }
+.rules32 .source-group, .rules32 .rule-summary .tablewrap { break-inside: avoid; page-break-inside: avoid; }
+</style>"""
+        head = head.replace("</head><body>", extra + '</head><body class="rules32">')
+    parts = [head]
     for sec in sections:
         cls = "chapter part" if sec.is_part else "chapter"
-        parts.append(f'<section class="{cls}"><h1>{B.inline(sec.title)}</h1>{B.render_blocks(sec.lines)}</section>')
+        content = B.render_blocks(sec.lines)
+        if book.key == "rules32":
+            content = content.replace("<p>本条归并", '<p class="source-note">本条归并')
+            if sec.title == "三十二条速查":
+                cls += " rule-summary"
+            if sec.title.startswith(("附录A", "附录B")):
+                content = re.sub(r"(<h2\b.*?)(?=<h2\b|\Z)",
+                                 r'<div class="source-group">\1</div>', content, flags=re.S)
+        parts.append(f'<section class="{cls}"><h1>{B.inline(sec.title)}</h1>{content}</section>')
     parts.append("</body></html>")
     doc = mark_wide_tables("".join(parts))
     return restore_marks(doc) if book.rich_marks else doc

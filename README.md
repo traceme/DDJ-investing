@@ -8,9 +8,11 @@
 
 🎧 有声书：[在线播放 / 下载 MP3](有声书.md)——全书 82 条音轨约 4 小时 54 分，微软神经语音「云扬」（新闻播音级男声）AI 朗读，含 ID3 标签可导入任意播放器。
 
+📜 **新增《投资三十二条军规》**：[在线阅读](https://traceme.github.io/DDJ-investing/#/投资三十二条军规) ／ [下载 EPUB](https://traceme.github.io/DDJ-investing/投资三十二条军规.epub) ／ [下载 PDF（55 页）](https://traceme.github.io/DDJ-investing/投资三十二条军规.pdf) ／ [Markdown 书稿](投资三十二条军规.md)。将全项目 360 条纪律浓缩为八组、三十二条，每条都有四步操作指南，附虚构交易演练、五张操作卡和完整来源索引；PDF 中每条军规完整占一页。
+
 ## 项目地图
 
-一个仓库，四层文本。下层给上层提供编号，上层只引用、从不重写：
+原始心法提供出处，纪律总表归并编号，手册和系统细化执行，军规版把全项目提炼成便于随时查用的三十二条：
 
 ```
  心法 ── 五部语料，约九十万字 ── 该相信什么
@@ -22,6 +24,7 @@
         └─ 机器 ── 道德经投资系统 ── 宪N／S0–S4／P0–P8／R18 ── 今天允许做什么、违反了怎样、何时能改
               └─ 代码 ── 股票量化投资系统 ── 设计规格 v1.0 ── 让程序替人守纪律：数据、研究、仓位、订单、回测的合同
  人层 ── 成功投资者心性养成指南 ── 36 条练习 T1.1–T12.3 ── 让上面四层在冲动到来的九十秒里仍然有效的那个人，怎么练出来
+ 军规 ── 投资三十二条军规 ── 全项目纪律的综合提炼 ── 八组、三十二条、四步操作与五张操作卡
 ```
 
 | 层 | 书 | 阅读 | EPUB | PDF | 规模 |
@@ -37,12 +40,15 @@
 | **机器** | **道德经投资系统** | [道德经投资系统.md](道德经投资系统.md) | [下载](https://traceme.github.io/DDJ-investing/道德经投资系统.epub) | [下载](https://traceme.github.io/DDJ-investing/道德经投资系统.pdf) | 宪法十二条，360 行执行矩阵 |
 | **代码** | **股票量化投资系统** | [股票量化投资系统.md](股票量化投资系统.md) | [下载](https://traceme.github.io/DDJ-investing/股票量化投资系统.epub) | [下载](https://traceme.github.io/DDJ-investing/股票量化投资系统.pdf) | 设计规格 v1.0，十三章；程序、回测与模拟待实施 |
 | **人层** | **成功投资者心性养成指南** | [成功投资者心性养成指南.md](成功投资者心性养成指南.md) | [下载](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.epub) | [下载](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.pdf) | 十二章、36 条练习、一年训练日历 |
+| **军规** | **投资三十二条军规** | [在线阅读](https://traceme.github.io/DDJ-investing/#/投资三十二条军规) | [下载](https://traceme.github.io/DDJ-investing/投资三十二条军规.epub) | [下载](https://traceme.github.io/DDJ-investing/投资三十二条军规.pdf) | 32 条、PDF 55 页；逐条操作指南、虚构案例、五张操作卡 |
 
 每本都有 EPUB 与 PDF 两个版本、同一封面。PDF 为 A4 排版：宋体正文、黑体标题、页眉显示当前章节、页脚页码、带页码的目录与侧栏书签，表格跨页自动重复表头，适合打印或平板通读；EPUB 适合手机与阅读器重排。
 
-**怎么读。** 只想读随笔：从下面的[目录](#目录)任选一章。想拿到可执行的规则：先读《道德经投资系统》第一章——宪法十二条，一页纸；再按《打法手册》的八个决策点走一笔交易；《纪律总表》不必通读，被引用时按编号查。
+**怎么读。** 只想读随笔：从下面的[目录](#目录)任选一章。想先掌握全项目的纪律：[《投资三十二条军规》](https://traceme.github.io/DDJ-investing/#/投资三十二条军规)给出八组原则、逐条操作指南与五张操作卡。需要更细的参数和执行机制，再读《道德经投资系统》与《打法手册》；《纪律总表》被引用时按编号查。
 
 ## 各册简介
+
+📜 纪律浓缩：[投资三十二条军规](https://traceme.github.io/DDJ-investing/#/投资三十二条军规)（[下载 EPUB](https://traceme.github.io/DDJ-investing/投资三十二条军规.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/投资三十二条军规.pdf)）——将360条纪律归并为八组三十二条，每条有判断原则、四步操作、触发处置与百字以内建议。附一笔虚构交易的完整演练、五张可复制操作卡和360条来源索引，并吸收执行规则、心性训练与量化设计的边界说明。原参数与本书取舍分开标注。
 
 🧭 重悟新版：[道德经81章投资心法Codex版本](codex/README.md)（[下载 Codex EPUB](https://traceme.github.io/DDJ-investing/道德经81章投资心法Codex版本.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/道德经81章投资心法Codex版本.pdf)）——从生活与市场场景切入，用大白话讲透章句、人性与投资方法，并附不超过100字的实操建议。
 
@@ -166,8 +172,10 @@ python3 system/render_catalog.py --render    # 纪律总表：2,526 处引文逐
 python3 system/assemble_system.py && python3 system/validate_system.py   # 投资系统：装配 → 校验
 python3 playbook/assemble_book.py && python3 playbook/validate_book.py   # 打法手册：装配 → 校验
 python3 mindset/assemble_book.py && python3 mindset/validate_book.py   # 心性指南：装配 → 校验（道德经与语料引文逐字、练习编号、文献白名单）
-python3 scripts/build_system_epub.py         # 规则层三本 + 量化系统 + 心性指南 EPUB（可加 playbook / catalog / system / quant / mind 只建一本）
-python3 scripts/build_pdf.py                 # 十本 PDF（Chrome 排版 + PyMuPDF 装订；需 Chrome、PyMuPDF、fontTools；可加书名键只建几本）
+python3 rules32/assemble_book.py && python3 rules32/validate_book.py   # 三十二条军规：装配、来源归并与正文校验
+python3 scripts/build_system_epub.py         # 已登记 EPUB；加 rules32 只建三十二条军规
+python3 scripts/build_pdf.py                 # 十一本 PDF；加 rules32 只建三十二条军规（需 Chrome、PyMuPDF、fontTools）
+python3 rules32/validate_book.py --artifacts # 军规 EPUB / PDF 全文、编号、目录与案例算术核验
 ```
 
 校验器断言的事：纪律总表的每处引文逐字出现在所标篇章；投资系统引用的每个纪律编号存在、每条规则已注册、执行矩阵的编号集合与纪律总表完全相等、《道德经》引文逐字、记点级别与宪法一致；打法手册的每句《道德经》引文逐字、每个 R 编号已注册；三本都不含真实账户数字（案例账户归一为 100 单位）。
