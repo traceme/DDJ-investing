@@ -119,6 +119,18 @@ EDITIONS = {
         cover_caption="每条有判断标准，每条有操作指南",
         publication_date="2026-09-12",
     ),
+    "wuwei": Edition(
+        key="wuwei",
+        source=ROOT / "三本心法的分工与无为用法.md",
+        output=ROOT / "三本心法的分工与无为用法.epub",
+        title="三本心法的分工与无为用法",
+        subtitle="减法 · 看法 · 节律",
+        book_id="ddj-investing-wuwei",
+        eyebrow="道 德 经 · 三 眼 · 金 冰",
+        cover_motif="trio",
+        cover_caption="把三本书各自的长处交给券商、日历、转账和另一个人",
+        publication_date="2026-09-15",
+    ),
 }
 
 XHTML_HEADER = """<?xml version="1.0" encoding="utf-8"?>
@@ -659,6 +671,14 @@ def build_cover(path: Path, ed: Edition) -> None:
                                        outline=green if col == 0 else gold, width=3)
                 draw.line((x + 20, y + 21, x + 60, y + 21),
                           fill=gold if col == 0 else pale_gold, width=3)
+    elif ed.cover_motif == "trio":
+        # 三本书：环内三道横线，上短下长；环下四点是四个载体——券商、日历、转账、另一个人
+        draw.ellipse((cx - 250, cy - 250, cx + 250, cy + 250), outline=green, width=6)
+        for k, (w, y) in enumerate(((110, cy - 110), (150, cy), (190, cy + 110))):
+            draw.line((cx - w, y, cx + w, y), fill=gold, width=9)
+        for k in range(4):
+            x = cx - 135 + k * 90
+            draw.ellipse((x - 11, cy + 289, x + 11, cy + 311), fill=pale_gold)
     elif ed.cover_motif == "ripple":
         # 守静：一枚石子落进静水，涟漪一圈圈散开——冲动会来，也会退
         for k, r in enumerate((250, 190, 130, 72)):
@@ -947,6 +967,7 @@ def validate_epub(output: Path, ed: Edition, sections: list[Section]) -> None:
             "quant": ("卷首", "设计规格 v1.0", "十三、实施交付", "legacy_playbook", "第48章", "MOS"),
             "mind": ("卷首", "第一章", "附录 A", "免责声明", "案例账户", "《道德经》第", "T1.1"),
             "rules32": ("第01条", "第32条", "附录A", "C01-001", "C18-022", "操作指南", "案例账户"),
+            "wuwei": ("先说结论", "学减法", "学看法", "学节律", "那七小时", "C08-001", "T1.2", "《道德经》第", "出处与口径"),
         }.get(ed.key, ("附录A", "免责声明", "第十二章"))
         for probe in probes:
             if probe not in joined:
@@ -962,15 +983,15 @@ def validate_epub(output: Path, ed: Edition, sections: list[Section]) -> None:
                 raise ValueError("三十二条军规的360条来源编号有遗漏或多余")
             if sum(bool(re.match(r"第\d{2}条 · ", s.title)) for s in sections) != 32:
                 raise ValueError("三十二条军规的正文条目数量错误")
-        if ed.key in ("playbook", "system", "catalog", "quant", "mind", "rules32"):
+        if ed.key in ("playbook", "system", "catalog", "quant", "mind", "rules32", "wuwei"):
             for bad in ("150万", "1.5M", "traceme", "discovery-invest"):
                 if bad in joined:
                     raise ValueError(f"{ed.title}正文含不应出现的字符串「{bad}」")
             if re.search(r"<a href=\"/", joined):
                 raise ValueError(f"{ed.title}成书里残留站内链接")
-        if ed.key in ("playbook", "system", "catalog", "mind"):
+        if ed.key in ("playbook", "system", "catalog", "mind", "wuwei"):
             nq = joined.count("《道德经》第")
-            floor = {"playbook": 30, "system": 15, "catalog": 0, "mind": 20}.get(ed.key, 15)
+            floor = {"playbook": 30, "system": 15, "catalog": 0, "mind": 20, "wuwei": 8}.get(ed.key, 15)
             if nq < floor:
                 raise ValueError(f"{ed.title}的《道德经》引文只剩 {nq} 处（下限 {floor}），疑似转换丢失")
         if ed.key == "system":

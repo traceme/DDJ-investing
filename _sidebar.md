@@ -104,6 +104,7 @@
 
 - **人层**
   - [🪷 成功投资者心性养成指南（36 条练习）](成功投资者心性养成指南.md)　[EPUB](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.epub)　[PDF](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.pdf)
+  - [🧘 三本心法的分工与无为用法（三部源书各学什么、怎样不靠意志用）](三本心法的分工与无为用法.md)　[EPUB](https://traceme.github.io/DDJ-investing/三本心法的分工与无为用法.epub)　[PDF](https://traceme.github.io/DDJ-investing/三本心法的分工与无为用法.pdf)
 
 - **投资指南**
   - [⏳ 普通投资者的努力方向与时间分配](/普通投资者的努力方向与时间分配.md)　[PDF](https://traceme.github.io/DDJ-investing/普通投资者的努力方向与时间分配.pdf)

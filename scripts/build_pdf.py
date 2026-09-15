@@ -171,6 +171,7 @@ E = B.EDITIONS
 
 QUANT_META = "设计规格：程序、回测与模拟交易尚未实施，不可据此启用实盘；不构成任何具体投资建议"
 MIND_META = "训练手册，不是荐股，也不是医疗建议；示例数字来自归一为 100 单位的案例账户"
+WUWEI_META = "三本心法语料的分工与安装说明，不是荐股；所有数字沿用各书既有取值，不构成具体投资建议"
 
 
 def rules_book(key: str, out: str, probes: tuple, meta: str = RULES_META) -> Book:
@@ -201,6 +202,8 @@ BOOKS: dict[str, Book] = {
                         ("设计规格 v1.0", "十三、实施交付", "legacy_playbook", "第48章"), QUANT_META),
     "mind": rules_book("mind", "成功投资者心性养成指南.pdf",
                        ("卷首", "案例账户", "附录 A", "T1.1"), MIND_META),
+    "wuwei": rules_book("wuwei", "三本心法的分工与无为用法.pdf",
+                        ("先说结论", "那七小时", "C08-001", "T1.2", "出处与口径"), WUWEI_META),
     "rules32": rules_book("rules32", "投资三十二条军规.pdf",
                           ("第01条", "第32条", "附录A", "C01-001", "C18-022", "0.6575"),
                           "三十二条操作军规；虚构案例归一为100单位，示例参数不构成具体投资建议"),

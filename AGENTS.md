@@ -19,7 +19,7 @@ python3 scripts/build_codex_epub.py
 python3 scripts/build_selection_epub.py
 python3 scripts/build_jinbing_epub.py
 python3 scripts/build_system_epub.py        # 三版一起构建；可加 playbook / catalog / system 只建一版
-python3 scripts/build_pdf.py                # 十三本 A4 PDF（有 EPUB 的书共用封面）；需 Google Chrome、PyMuPDF、fontTools（不入库字体：构建时从系统 Songti.ttc 抽取）
+python3 scripts/build_pdf.py                # 十四本 A4 PDF（有 EPUB 的书共用封面）；需 Google Chrome、PyMuPDF、fontTools（不入库字体：构建时从系统 Songti.ttc 抽取）
 python3 scripts/build_pdf.py effort research # 两本投资指南：从同名 Markdown 构建，逐行核对正文与全部标题书签
 python3 playbook/assemble_book.py && python3 scripts/build_system_epub.py playbook   # 打法手册：先装配再构建
 python3 system/render_catalog.py --render && python3 scripts/build_system_epub.py catalog   # 纪律总表：核对引文、渲染、构建 EPUB

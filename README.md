@@ -24,6 +24,7 @@
         └─ 机器 ── 道德经投资系统 ── 宪N／S0–S4／P0–P8／R18 ── 今天允许做什么、违反了怎样、何时能改
               └─ 代码 ── 股票量化投资系统 ── 设计规格 v1.0 ── 让程序替人守纪律：数据、研究、仓位、订单、回测的合同
  人层 ── 成功投资者心性养成指南 ── 36 条练习 T1.1–T12.3 ── 让上面四层在冲动到来的九十秒里仍然有效的那个人，怎么练出来
+ 用法 ── 三本心法的分工与无为用法 ── 减法／看法／节律 ── 三部源书各教什么，怎样交给券商、日历、转账和另一个人，不靠意志
  军规 ── 投资三十二条军规 ── 全项目纪律的综合提炼 ── 八组、三十二条、四步操作与五张操作卡
  指南 ── 普通投资者的努力方向与时间分配 ／ 专业投资研究指南 ── 时间花在哪里、研究如何形成可复核的判断
 ```
@@ -41,6 +42,7 @@
 | **机器** | **道德经投资系统** | [道德经投资系统.md](道德经投资系统.md) | [下载](https://traceme.github.io/DDJ-investing/道德经投资系统.epub) | [下载](https://traceme.github.io/DDJ-investing/道德经投资系统.pdf) | 宪法十二条，360 行执行矩阵 |
 | **代码** | **股票量化投资系统** | [股票量化投资系统.md](股票量化投资系统.md) | [下载](https://traceme.github.io/DDJ-investing/股票量化投资系统.epub) | [下载](https://traceme.github.io/DDJ-investing/股票量化投资系统.pdf) | 设计规格 v1.0，十三章；程序、回测与模拟待实施 |
 | **人层** | **成功投资者心性养成指南** | [成功投资者心性养成指南.md](成功投资者心性养成指南.md) | [下载](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.epub) | [下载](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.pdf) | 十二章、36 条练习、一年训练日历 |
+| **用法** | **三本心法的分工与无为用法** | [三本心法的分工与无为用法.md](三本心法的分工与无为用法.md) | [下载](https://traceme.github.io/DDJ-investing/三本心法的分工与无为用法.epub) | [下载](https://traceme.github.io/DDJ-investing/三本心法的分工与无为用法.pdf) | 七节，PDF 16 页；按纪律总表统计三部源书的分工，每条心法配一个不靠意志的安装动作 |
 | **军规** | **投资三十二条军规** | [在线阅读](https://traceme.github.io/DDJ-investing/#/投资三十二条军规) | [下载](https://traceme.github.io/DDJ-investing/投资三十二条军规.epub) | [下载](https://traceme.github.io/DDJ-investing/投资三十二条军规.pdf) | 32 条、PDF 55 页；逐条操作指南、虚构案例、五张操作卡 |
 | **指南** | **普通投资者的努力方向与时间分配** | [在线阅读](https://traceme.github.io/DDJ-investing/#/普通投资者的努力方向与时间分配) | — | [下载](https://traceme.github.io/DDJ-investing/普通投资者的努力方向与时间分配.pdf) | 九章，PDF 11 页；努力方向、两种路线的时间安排与每周四小时研究示例 |
 | **指南** | **专业投资研究指南** | [在线阅读](https://traceme.github.io/DDJ-investing/#/专业投资研究指南) | — | [下载](https://traceme.github.io/DDJ-investing/专业投资研究指南.pdf) | 七章，PDF 9 页；九个研究维度、三个决策层次与研究验收标准 |
@@ -70,6 +72,8 @@
 🤖 代码层：[股票量化投资系统](股票量化投资系统.md)（[下载 EPUB](https://traceme.github.io/DDJ-investing/股票量化投资系统.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/股票量化投资系统.pdf)）——把上面三层交给程序执行的设计规格：只能用当时已知的事实（时点数据与修订契约、缺失即 UNKNOWN）、先辨认好生意再算好价格（资格门、三情景估值与安全边际、行业模板）、上限不是必须买满的目标（组合约束口径、分批与持有带）、意图先落账再调券商（订单去重、交易边界、运行节律）、回测不把故事写成神话（公平比较、最小测试矩阵、上线门槛），末尾走一笔虚构交易的完整路径。**它是设计交付，不是已运行的程序：回测、模拟与实盘各自另过验收与授权门。**
 
 🪷 人层：[成功投资者心性养成指南](成功投资者心性养成指南.md)（[下载 EPUB](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.pdf)）——写给还在满仓梭哈、多次亏完本金、总觉得复利太慢的读者：把《道德经》提倡的心性（知止、知足、守静、不争、慎终如始、自胜者强）换算成 36 条可计数的练习，按日历排成一年——停手 30 天装好两户结构与转出延迟，复训 90 天练熟冲动来时的五个动作（命名、离屏、四个数、四分之一、隔夜），规则实盘六个月跑复发协议与顺境协议，每月一张没有收益率的心性记分卡。全部数字取自算术底稿（翻倍年数、亏损不对称、波动拖累、连续梭哈存活率、十年路径对照），心理学只引带样本范围的白名单文献，语料引文逐字核对，案例账户逐月走完一年（含一次失足、一次复发）。**它不是治疗，也不承诺收益：一年后账户不翻身、本金不归零、记录完整。**
+
+🧘 用法：[三本心法的分工与无为用法](三本心法的分工与无为用法.md)（[下载 EPUB](https://traceme.github.io/DDJ-investing/三本心法的分工与无为用法.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/三本心法的分工与无为用法.pdf)）——回答两个问题：《道德经》、第三只眼观、金冰三部源书各自能学到什么，平常投资中怎样不靠意志力就把它们用起来。分工不是编者定的，是按《投资纪律总表》360 条纪律的逐字来源统计出来的：道德经管减法（关掉、删掉、不做），三眼管看法（水位、位置、谁受益），金冰管节律（哪一天、哪笔转账、哪个人）。每条心法后面跟一个「无为安装」——搬到券商设置、日历、账户结构或另一个人身上，冲动那一刻没有选择可做；附第一天七小时的安装清单、一句自检和三本书都挡不住的三件事。不新增任何参数，编号全部沿用纪律总表、打法手册与心性指南。
 
 📚 姊妹辑：[第三只眼观 · 投资心法](thethirdeye/README.md)（[下载 EPUB](https://traceme.github.io/DDJ-investing/第三只眼观投资心法.epub) ／ [下载 PDF](https://traceme.github.io/DDJ-investing/第三只眼观投资心法.pdf)）——《第三只眼观》151篇文章的逐篇读书笔记（中心思想＋投资随笔），体例与本书一致。
 
@@ -180,8 +184,9 @@ python3 system/assemble_system.py && python3 system/validate_system.py   # 投�
 python3 playbook/assemble_book.py && python3 playbook/validate_book.py   # 打法手册：装配 → 校验
 python3 mindset/assemble_book.py && python3 mindset/validate_book.py   # 心性指南：装配 → 校验（道德经与语料引文逐字、练习编号、文献白名单）
 python3 rules32/assemble_book.py && python3 rules32/validate_book.py   # 三十二条军规：装配、来源归并与正文校验
+python3 mindset/validate_book.py 三本心法的分工与无为用法.md   # 无为用法：单文件，复用心性指南校验器（道德经引文逐字、T／C／R 编号、无真实金额）
 python3 scripts/build_system_epub.py         # 已登记 EPUB；加 rules32 只建三十二条军规
-python3 scripts/build_pdf.py                 # 十三本 PDF（需 Chrome、PyMuPDF、fontTools）
+python3 scripts/build_pdf.py                 # 十四本 PDF（需 Chrome、PyMuPDF、fontTools）
 python3 scripts/build_pdf.py effort research # 只建两本投资指南；自动核对全文与章节书签
 python3 rules32/validate_book.py --artifacts # 军规 EPUB / PDF 全文、编号、目录与案例算术核验
 ```
