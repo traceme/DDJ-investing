@@ -119,6 +119,18 @@ EDITIONS = {
         cover_caption="每条有判断标准，每条有操作指南",
         publication_date="2026-09-12",
     ),
+    "onebook": Edition(
+        key="onebook",
+        source=ROOT / "读道德经悟投资心法.md",
+        output=ROOT / "读道德经悟投资心法.epub",
+        title="读道德经悟投资心法",
+        subtitle="八十一章 · 一日一章 · 一次写清",
+        book_id="ddj-investing-onebook",
+        eyebrow="道 德 经 · 三 眼 · 金 冰 · 汇 于 一 书",
+        cover_motif="one",
+        cover_caption="原文、心法、案例、纪律、实操、练习，不用去别处查任何东西",
+        publication_date="2026-09-20",
+    ),
     "wuwei": Edition(
         key="wuwei",
         source=ROOT / "三本心法的分工与无为用法.md",
@@ -239,6 +251,9 @@ def inline(text: str) -> str:
 
     # 行内代码优先，内部不再解析其他标记
     text = re.sub(r"`([^`]+)`", lambda m: stash(f"<code>{esc(m.group(1))}</code>"), text)
+    # 心法随笔的原文引文与警句：<mark>…</mark>／<u>…</u> 原样保留为标签
+    text = re.sub(r"<(mark|u)>(.*?)</\1>",
+                  lambda m: stash(f"<{m.group(1)}>{esc(m.group(2))}</{m.group(1)}>"), text, flags=re.S)
     # 紧凑式原文标注
     text = ANNOT_COMPACT.sub(
         lambda m: stash(
@@ -679,6 +694,18 @@ def build_cover(path: Path, ed: Edition) -> None:
         for k in range(4):
             x = cx - 135 + k * 90
             draw.ellipse((x - 11, cy + 289, x + 11, cy + 311), fill=pale_gold)
+    elif ed.cover_motif == "one":
+        # 一书为源：一个环，环心一点；环外八十一道细刻度是八十一章，每九章一道长刻
+        from math import cos, radians, sin
+        draw.ellipse((cx - 250, cy - 250, cx + 250, cy + 250), outline=green, width=6)
+        for k in range(81):
+            ang = radians(90 - k * 360 / 81)
+            long = k % 9 == 0
+            r1, r2 = (262, 296) if long else (268, 284)
+            draw.line((cx + r1 * cos(ang), cy - r1 * sin(ang), cx + r2 * cos(ang), cy - r2 * sin(ang)),
+                      fill=gold if long else pale_gold, width=5 if long else 3)
+        draw.ellipse((cx - 96, cy - 96, cx + 96, cy + 96), outline=pale_gold, width=3)
+        draw.ellipse((cx - 22, cy - 22, cx + 22, cy + 22), fill=gold)
     elif ed.cover_motif == "ripple":
         # 守静：一枚石子落进静水，涟漪一圈圈散开——冲动会来，也会退
         for k, r in enumerate((250, 190, 130, 72)):
@@ -747,6 +774,8 @@ h3 {
 p { margin: 0.6em 0; text-indent: 2em; }
 a { color: #3d6b56; text-decoration: none; }
 strong { color: #2f624d; }
+mark { background: none; color: #b18f43; font-weight: 600; }
+u { text-decoration: none; border-bottom: 1px solid #3d6b56; color: #2f624d; }
 code {
   padding: 0 0.2em;
   background: #f4efe2;
@@ -968,6 +997,8 @@ def validate_epub(output: Path, ed: Edition, sections: list[Section]) -> None:
             "mind": ("卷首", "第一章", "附录 A", "免责声明", "案例账户", "《道德经》第", "T1.1"),
             "rules32": ("第01条", "第32条", "附录A", "C01-001", "C18-022", "操作指南", "案例账户"),
             "wuwei": ("先说结论", "学减法", "学看法", "学节律", "那七小时", "C08-001", "T1.2", "《道德经》第", "出处与口径"),
+            "onebook": ("总纲", "十二条根本规矩", "参数表", "第一章", "第八十一章", "附录", "免责声明",
+                        "案例账户", "三眼说", "金冰说", "<mark>"),
         }.get(ed.key, ("附录A", "免责声明", "第十二章"))
         for probe in probes:
             if probe not in joined:
@@ -983,7 +1014,15 @@ def validate_epub(output: Path, ed: Edition, sections: list[Section]) -> None:
                 raise ValueError("三十二条军规的360条来源编号有遗漏或多余")
             if sum(bool(re.match(r"第\d{2}条 · ", s.title)) for s in sections) != 32:
                 raise ValueError("三十二条军规的正文条目数量错误")
-        if ed.key in ("playbook", "system", "catalog", "quant", "mind", "rules32", "wuwei"):
+        if ed.key == "onebook":
+            if sum(bool(re.match(r"第[一二三四五六七八九十]+章 · ", s.title)) for s in sections) != 81:
+                raise ValueError("读道德经悟投资心法应恰有八十一章")
+            for pat in (r"\bC\d\d-\d{3}\b", r"\bR\d+\.\d+\b", r"\bT\d+\.\d+\b", r"宪[一二三四五六七八九十]"):
+                if re.search(pat, joined):
+                    raise ValueError(f"读道德经悟投资心法不用编号，成书却含 {pat}")
+            if "&lt;mark&gt;" in joined:
+                raise ValueError("成书里 <mark> 被转义成了文字")
+        if ed.key in ("playbook", "system", "catalog", "quant", "mind", "rules32", "wuwei", "onebook"):
             for bad in ("150万", "1.5M", "traceme", "discovery-invest"):
                 if bad in joined:
                     raise ValueError(f"{ed.title}正文含不应出现的字符串「{bad}」")

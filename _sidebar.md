@@ -1,5 +1,7 @@
 - [封面](/)
 
+- [📕 读道德经悟投资心法 · 一书为源](读道德经悟投资心法.md)　[EPUB](https://traceme.github.io/DDJ-investing/读道德经悟投资心法.epub)　[PDF](https://traceme.github.io/DDJ-investing/读道德经悟投资心法.pdf)
+
 - [🎧 有声书 · AI 朗读版](有声书.md)
 
 - [🧭 Codex版本 · 重悟新版](codex/README.md)　[PDF](https://traceme.github.io/DDJ-investing/道德经81章投资心法Codex版本.pdf)
