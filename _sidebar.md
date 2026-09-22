@@ -108,6 +108,9 @@
   - [🪷 成功投资者心性养成指南（36 条练习）](成功投资者心性养成指南.md)　[EPUB](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.epub)　[PDF](https://traceme.github.io/DDJ-investing/成功投资者心性养成指南.pdf)
   - [🧘 三本心法的分工与无为用法（三部源书各学什么、怎样不靠意志用）](三本心法的分工与无为用法.md)　[EPUB](https://traceme.github.io/DDJ-investing/三本心法的分工与无为用法.epub)　[PDF](https://traceme.github.io/DDJ-investing/三本心法的分工与无为用法.pdf)
 
+- **投资体系**
+  - [📘 价值投资者投资体系与交易系统（十八章 · 五附录）](价值投资者投资体系与交易系统.md)　[EPUB](https://traceme.github.io/DDJ-investing/价值投资者投资体系与交易系统.epub)　[PDF](https://traceme.github.io/DDJ-investing/价值投资者投资体系与交易系统.pdf)
+
 - **投资指南**
   - [⏳ 普通投资者的努力方向与时间分配](/普通投资者的努力方向与时间分配.md)　[PDF](https://traceme.github.io/DDJ-investing/普通投资者的努力方向与时间分配.pdf)
   - [🔎 专业投资研究指南](/专业投资研究指南.md)　[PDF](https://traceme.github.io/DDJ-investing/专业投资研究指南.pdf)

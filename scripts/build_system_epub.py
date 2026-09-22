@@ -131,6 +131,20 @@ EDITIONS = {
         cover_caption="原文、心法、案例、纪律、实操、练习，不用去别处查任何东西",
         publication_date="2026-09-20",
     ),
+    "value": Edition(
+        key="value",
+        source=ROOT / "价值投资者投资体系与交易系统.md",
+        output=ROOT / "价值投资者投资体系与交易系统.epub",
+        title="价值投资者投资体系与交易系统",
+        subtitle="十八章 · 五附录 · 从使命到闭环",
+        book_id="ddj-investing-value-system",
+        eyebrow="成 长 价 值 · 集 中 持 有 · 长 期 生 存",
+        cover_motif="five",
+        cover_caption="先写生活的账，再写证券的账；先能活下来，再谈十倍",
+        intro_title="卷首",
+        publication_date="2026-09-22",
+        cover_title_lines=("价值投资者", "投资体系与交易系统"),
+    ),
     "wuwei": Edition(
         key="wuwei",
         source=ROOT / "三本心法的分工与无为用法.md",
@@ -204,6 +218,8 @@ def parse_document(source: Path, split_h3: tuple = (), intro_title: str = "") ->
             sections.append(Section(index=index, title=intro_title, lines=intro))
     in_split = ""               # 非空＝当前 H2 之下的 H3 各自成页，值为页面短前缀
     for line in text.split("\n"):
+        if re.fullmatch(r'\s*<a id="[^"]+"></a>\s*', line):   # docsify 页内锚点，成书里无用
+            continue
         m3 = re.match(r"^### (.+?)\s*$", line)
         if m3 and in_split:
             index += 1
@@ -706,6 +722,16 @@ def build_cover(path: Path, ed: Edition) -> None:
                       fill=gold if long else pale_gold, width=5 if long else 3)
         draw.ellipse((cx - 96, cy - 96, cx + 96, cy + 96), outline=pale_gold, width=3)
         draw.ellipse((cx - 22, cy - 22, cx + 22, cy + 22), fill=gold)
+    elif ed.cover_motif == "five":
+        # 五家公司：环内五根高低不一的立柱是集中持有的组合；柱下一道金线是两条损失边界里更近的那条
+        draw.ellipse((cx - 250, cy - 250, cx + 250, cy + 250), outline=green, width=6)
+        base = cy + 120
+        for k, h in enumerate((110, 190, 150, 250, 80)):
+            x = cx - 160 + k * 80
+            draw.rounded_rectangle((x - 22, base - h, x + 22, base), radius=5,
+                                   outline=gold, width=4, fill=background if k != 3 else pale_gold)
+        draw.line((cx - 200, base + 24, cx + 200, base + 24), fill=gold, width=5)
+        draw.line((cx - 150, base + 48, cx + 150, base + 48), fill=pale_gold, width=3)
     elif ed.cover_motif == "ripple":
         # 守静：一枚石子落进静水，涟漪一圈圈散开——冲动会来，也会退
         for k, r in enumerate((250, 190, 130, 72)):
@@ -999,6 +1025,8 @@ def validate_epub(output: Path, ed: Edition, sections: list[Section]) -> None:
             "wuwei": ("先说结论", "学减法", "学看法", "学节律", "那七小时", "C08-001", "T1.2", "《道德经》第", "出处与口径"),
             "onebook": ("总纲", "十二条根本规矩", "参数表", "第一章", "第八十一章", "附录", "免责声明",
                         "案例账户", "三眼说", "金冰说", "<mark>"),
+            "value": ("卷首", "阅读说明", "第一章", "第十八章", "附录一", "附录五", "远川软件",
+                      "原预警阈值登记表", "季度复盘的十个问题", "100 单位"),
         }.get(ed.key, ("附录A", "免责声明", "第十二章"))
         for probe in probes:
             if probe not in joined:
@@ -1022,7 +1050,12 @@ def validate_epub(output: Path, ed: Edition, sections: list[Section]) -> None:
                     raise ValueError(f"读道德经悟投资心法不用编号，成书却含 {pat}")
             if "&lt;mark&gt;" in joined:
                 raise ValueError("成书里 <mark> 被转义成了文字")
-        if ed.key in ("playbook", "system", "catalog", "quant", "mind", "rules32", "wuwei", "onebook"):
+        if ed.key == "value":
+            if sum(bool(re.match(r"第[一二三四五六七八九十]+章[：:]", s.title)) for s in sections) != 18:
+                raise ValueError("价值投资者投资体系与交易系统应恰有十八章")
+            if "&lt;a id=" in joined or "<a id=" in joined:
+                raise ValueError("成书里残留 docsify 页内锚点")
+        if ed.key in ("playbook", "system", "catalog", "quant", "mind", "rules32", "wuwei", "onebook", "value"):
             for bad in ("150万", "1.5M", "traceme", "discovery-invest"):
                 if bad in joined:
                     raise ValueError(f"{ed.title}正文含不应出现的字符串「{bad}」")
