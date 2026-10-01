@@ -42,6 +42,7 @@
 | 心法 | 道德经81章投资心法 | [目录](#目录) | [下载](https://traceme.github.io/DDJ-investing/道德经81章投资心法.epub) | [下载](https://traceme.github.io/DDJ-investing/道德经81章投资心法.pdf) | 81 章，另有[有声书](有声书.md) |
 | 心法 | 道德经81章投资心法 · Codex 重悟版 | [codex/README.md](codex/README.md) | [下载](https://traceme.github.io/DDJ-investing/道德经81章投资心法Codex版本.epub) | [下载](https://traceme.github.io/DDJ-investing/道德经81章投资心法Codex版本.pdf) | 81 章 |
 | 心法 | 第三只眼观 · 投资心法 | [thethirdeye/README.md](thethirdeye/README.md) | [下载](https://traceme.github.io/DDJ-investing/第三只眼观投资心法.epub) | [下载](https://traceme.github.io/DDJ-investing/第三只眼观投资心法.pdf) | 151 篇 |
+| 精华 | 第三只眼观精华100句 | [在线阅读](第三只眼观精华100句.md) | — | [下载](https://traceme.github.io/DDJ-investing/第三只眼观精华100句.pdf) | 十层递进、100句话，PDF 8页；含封面、目录与书签，附在线来源说明 |
 | 心法 | 人生悟道 渡人渡己 · 投资篇读书心法 | [jinbing-drdj/README.md](jinbing-drdj/README.md) | [下载](https://traceme.github.io/DDJ-investing/人生悟道渡人渡己投资篇读书心法.epub) | [下载](https://traceme.github.io/DDJ-investing/人生悟道渡人渡己投资篇读书心法.pdf) | 72 篇 |
 | 心法 | 投资心法 100 条精选 | [投资心法100条精选版.md](投资心法100条精选版.md) | [下载](https://traceme.github.io/DDJ-investing/投资心法100条精选版.epub) | [下载](https://traceme.github.io/DDJ-investing/投资心法100条精选版.pdf) | 100 条（另有 [313 条全量](投资心法313条全量版.md)） |
 | 综述 | 投资体系与方法论 · 九维实操手册 | [无标注版](投资体系与方法论.md) ／ [道德经对照版](投资体系与方法论·道德经对照版.md) | — | — | 22 万字，680 处原文标注 |

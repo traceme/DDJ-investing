@@ -121,6 +121,7 @@
 
 - **姊妹辑**
   - [第三只眼观 · 投资心法（151篇）](thethirdeye/README.md)　[PDF](https://traceme.github.io/DDJ-investing/第三只眼观投资心法.pdf)
+  - [第三只眼观精华100句](第三只眼观精华100句.md)　[PDF](https://traceme.github.io/DDJ-investing/第三只眼观精华100句.pdf)
   - [📗 人生悟道 渡人渡己 · 投资篇（72篇）](jinbing-drdj/README.md)　[PDF](https://traceme.github.io/DDJ-investing/人生悟道渡人渡己投资篇读书心法.pdf)
 
 - **附录**

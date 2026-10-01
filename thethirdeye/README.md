@@ -6,6 +6,8 @@
 
 📖 电子书：[下载 EPUB](https://traceme.github.io/DDJ-investing/第三只眼观投资心法.epub)（含封面与五卷分部目录，可导入微信读书、Apple Books、Kindle 等阅读器）
 
+精华导读：[《第三只眼观精华100句》](/第三只眼观精华100句.md)（[下载 PDF](https://traceme.github.io/DDJ-investing/第三只眼观精华100句.pdf)）——按“去执念 → 建认知 → 察人性 → 看分配 → 懂货币 → 辨周期 → 选位置 → 留退路 → 成体系 → 得自主”递进归纳，非原文语录；附[来源与编写边界](/thethirdeye/精华100句编写说明.md)。
+
 
 ## 道悟观（第1—20章）
 

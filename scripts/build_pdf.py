@@ -24,6 +24,7 @@
     python3 scripts/build_pdf.py catalog ddj     # 只构建指定的几本
     python3 scripts/build_pdf.py rules32         # 《投资三十二条军规》
     python3 scripts/build_pdf.py effort research # 两本投资指南
+    python3 scripts/build_pdf.py thirdeye100     # 《第三只眼观精华100句》
 
 依赖：Google Chrome、PyMuPDF (fitz)、fontTools、Pillow（规则层封面）。
 """
@@ -42,6 +43,7 @@ import zipfile
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
+from urllib.parse import unquote
 
 import fitz  # PyMuPDF
 from fontTools.ttLib import TTCollection
@@ -182,19 +184,25 @@ def rules_book(key: str, out: str, probes: tuple, meta: str = RULES_META) -> Boo
 
 
 def guide_book(key: str, title: str, subtitle: str, eyebrow: str, caption: str,
-               motif: str, probes: tuple, title_lines: tuple[str, ...] = ()) -> Book:
+               motif: str, probes: tuple, title_lines: tuple[str, ...] = (),
+               meta: str = "投资方法说明，不构成具体证券买卖建议，也不保证收益或最大回撤") -> Book:
     """仅登记 PDF 的单文件指南；复用系列封面，不依赖预先生成的 EPUB。"""
     source, output = ROOT / f"{title}.md", ROOT / f"{title}.pdf"
     cover = B.Edition(key=key, source=source, output=output, title=title, subtitle=subtitle,
                       book_id=f"ddj-investing-{key}", eyebrow=eyebrow,
                       cover_motif=motif, cover_caption=caption, cover_title_lines=title_lines)
     return Book(key, title, subtitle, eyebrow, caption,
-                "投资方法说明，不构成具体证券买卖建议，也不保证收益或最大回撤",
+                meta,
                 output, single_file(source), cover_from_edition(cover), probes,
                 source=source, title_lines=title_lines)
 
 
 BOOKS: dict[str, Book] = {
+    "thirdeye100": guide_book("thirdeye100", "第三只眼观精华100句", "从看清自己，到看懂世界",
+                              "认 知 · 结 构 · 行 动 · 自 主", "151篇读书笔记，十层递进，一百句话",
+                              "three", ("去执念", "看分配", "得自主", "100. "),
+                              title_lines=("第三只眼观", "精华100句"),
+                              meta="151篇读书笔记的主题归纳，非原文语录；不构成具体投资建议"),
     "playbook": rules_book("playbook", "道德经投资打法手册.pdf", ("R4.6", "案例账户", "附录 B")),
     "catalog": rules_book("catalog", "投资纪律总表.pdf", ("C01-001", "C18-022", "铁律")),
     "system": rules_book("system", "道德经投资系统.pdf", ("宪十二", "C01-001", "R18.20")),
@@ -434,7 +442,13 @@ body.rules32 { line-height: 1.8; }
     parts = [head]
     for sec in sections:
         cls = "chapter part" if sec.is_part else "chapter"
-        content = B.render_blocks(sec.lines)
+        lines = sec.lines
+        if book.key == "thirdeye100":
+            # 离线 PDF 仍可打开在线的来源说明与151篇目录。
+            lines = [re.sub(r"\]\(/([^)]*)\)",
+                            r"](https://traceme.github.io/DDJ-investing/#/\1)", line)
+                     for line in lines]
+        content = B.render_blocks(lines)
         if book.key == "rules32":
             content = content.replace("<p>本条归并", '<p class="source-note">本条归并')
             if sec.title == "三十二条速查":
@@ -445,6 +459,8 @@ body.rules32 { line-height: 1.8; }
         parts.append(f'<section class="{cls}"><h1>{B.inline(sec.title)}</h1>{content}</section>')
     parts.append("</body></html>")
     doc = mark_wide_tables("".join(parts))
+    if book.key == "thirdeye100":
+        doc = doc.replace("</head>", "<style>li { break-inside: avoid; page-break-inside: avoid; }</style></head>")
     return restore_marks(doc) if book.rich_marks else doc
 
 
@@ -613,6 +629,32 @@ def build(book: Book) -> None:
             raise RuntimeError(f"{book.key}: 成书含不应出现的「{bad}」")
     if book.source:
         check_source_pdf(book.source, check)
+    if book.key == "thirdeye100":
+        source = book.source.read_text(encoding="utf-8")
+        numbered = re.findall(r"^(\d+)\. (.+)$", source, re.M)
+        if [int(n) for n, _ in numbered] != list(range(1, 101)):
+            raise RuntimeError("thirdeye100: 原稿编号必须连续为1—100")
+        if any(text.count("。") != 1 or not text.endswith("。") or re.search(r"[！？!?]", text)
+               for _, text in numbered):
+            raise RuntimeError("thirdeye100: 每项必须恰好一句")
+        body_text = "\n".join(page.get_text(clip=fitz.Rect(0, 55, page.rect.width, page.rect.height - 50))
+                              for page in check[first_body:])
+        numbers = [int(n) for n in re.findall(r"^\s*(\d+)\.\s", body_text, re.M)]
+        if numbers != list(range(1, 101)):
+            raise RuntimeError(f"thirdeye100: PDF 编号缺漏、重复或重置：{numbers}")
+        compact = lambda text: re.sub(r"\s+", "", text)
+        remaining = compact(body_text)
+        for n, sentence in numbered:
+            sentence = compact(sentence)
+            if remaining.count(sentence) != 1:
+                raise RuntimeError(f"thirdeye100: 第{n}句缺失、重复或顺序错误")
+            remaining = remaining.split(sentence, 1)[1]
+        expected = {"https://traceme.github.io/DDJ-investing/#/" + target
+                    for target in re.findall(r"\]\(/([^)]*)\)", source)}
+        actual = {unquote(link["uri"]) for page in check for link in page.get_links() if link.get("uri")}
+        if expected - actual:
+            raise RuntimeError("thirdeye100: PDF 缺少在线来源链接")
+        print("   100句逐句逐字且顺序一致，PDF编号连续1—100，在线来源链接完整")
     print(f"✅ {book.out.name}：{book.out.stat().st_size:,} 字节｜{check.page_count} 页"
           f"（封面 1 + 前言 {n_front} + 正文 {n_body}）｜{len(sections)} 章｜书签 {len(check.get_toc())} 条｜自检通过")
     check.close()
